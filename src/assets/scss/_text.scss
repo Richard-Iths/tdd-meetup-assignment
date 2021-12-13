@@ -1,0 +1,38 @@
+h1,
+h2 {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 800;
+  font-weight: 2.5em;
+  &.r {
+    font-size: 2em;
+  }
+}
+
+h1 {
+  &.xxl {
+    font-size: 5.5em;
+  }
+  &.xl {
+    font-size: 4em;
+  }
+  &.x {
+    font-size: 3em;
+  }
+}
+
+h3,
+h4 {
+  &.xxl {
+    font-size: 2em;
+  }
+  &.xl {
+    font-size: 1.5em;
+  }
+  &.x {
+    font-size: 1.2em;
+  }
+}
+h5,
+h6 {
+  font-size: 0.875em;
+}
