@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 import { SuccessResponse } from './types';
 
 export default abstract class Crud<T> {
-  axiosInstance = axios.create({
+  protected axiosInstance = axios.create({
     baseURL: process.env.HOST_URL || `http://localhost:3000/api/`,
   });
 
