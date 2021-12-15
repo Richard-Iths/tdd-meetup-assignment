@@ -11,7 +11,7 @@ export default class EventsRepository extends BaseRepository<Event> implements I
   async createEvent(event: Event): Promise<SuccessResponse | void> {
     try {
       const { data } = await this.create<EventsEndpoint>('/events', event);
-      return data;
+      return { ...data };
     } catch (_) {}
   }
   findAllEvents(): Promise<Event[]> {
