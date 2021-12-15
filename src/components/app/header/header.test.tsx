@@ -4,7 +4,7 @@ import { mount } from 'enzyme';
 import Header from './Header';
 import UserModal from '../../user/modals/UserModal';
 import { RecoilRoot } from 'recoil';
-import UserSettings from '../../user/settings/UserSettings';
+import UserEvents from '../../user/events/UserEvents';
 import { UserState, userState } from '../../../recoil/atoms/user';
 import { RecoilObserver } from '../../../recoil/observer';
 
@@ -39,7 +39,7 @@ describe('Header.tsx', () => {
             <Header />
           </RecoilRoot>
         );
-        const userSettings = wrapper.find(UserSettings);
+        const userSettings = wrapper.find(UserEvents);
         expect(userSettings.exists()).toBe(true);
       });
     });
