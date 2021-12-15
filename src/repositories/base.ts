@@ -3,13 +3,16 @@ import Crud from './crud';
 import { SuccessResponse } from './types';
 
 export default class BaseRepository<T> extends Crud<T> {
+  protected setAuthorizationToken(token: string): void {
+    this.axiosInstance.defaults.headers.common['Authorization'] = token;
+  }
   protected async create<S extends string>(
     url: S,
     data: T,
     token?: string
   ): Promise<AxiosResponse<SuccessResponse, any>> {
     if (token) {
-      this.axiosInstance.defaults.headers.common['Authorization'] = token;
+      this.axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     }
     return await this.axiosInstance.get(url, { data });
   }

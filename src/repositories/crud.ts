@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { SuccessResponse } from './types';
 
 export default abstract class Crud<T> {
@@ -12,4 +12,6 @@ export default abstract class Crud<T> {
     token?: string
   ): Promise<AxiosResponse<SuccessResponse, any>>;
   protected abstract findAll<S extends string>(url: S, token?: string): Promise<AxiosResponse<T[]>>;
+
+  protected abstract setAuthorizationToken(token: string): void;
 }
