@@ -1,60 +1,67 @@
 import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
-import Input, { Props as IInput } from '../../../input/Input';
 import { userState } from '../../../../recoil/atoms/user';
 import UsersRepository from '../../../../repositories/users';
+import Input, { Props as IInput } from '../../../input/Input';
 
-const UserLogin: React.FC = () => {
+const UserRegister: React.FC = () => {
   const [user, setUser] = useRecoilState(userState);
-  const loginUser = async () => {
+
+  const registerUser = async () => {
     const userRepository = new UsersRepository();
-    const { username, password } = loginCredentials;
-    const response = await userRepository.loginUser(username, password);
+    const { email, password } = registerCredentials;
+
+    const response = await userRepository.registerUser(email, password);
     if (response) {
       setUser({ ...user, token: response.data.token });
     }
   };
+  const [registerCredentials, setRegisterCredentials] = useState({ email: '', password: '' });
 
   const [disableBtn, setDisableBtn] = useState<boolean>(true);
 
-  const [loginCredentials, setLoginCredentials] = useState({ username: '', password: '' });
-
   useEffect(() => {
-    const isCredentialsEmpty = () => Object.values(loginCredentials).some((value) => value === '');
+    const isCredentialsEmpty = () => Object.values(registerCredentials).some((value) => value === '');
     if (!isCredentialsEmpty() && disableBtn) {
       setDisableBtn(false);
     } else if (isCredentialsEmpty() && !disableBtn) {
       setDisableBtn(true);
     }
-  }, [loginCredentials, disableBtn]);
+  }, [registerCredentials, disableBtn]);
 
   const onInputChange: IInput['onChangeHandler'] = (e) => {
     const target = e.target;
-    setLoginCredentials({ ...loginCredentials, [target.name]: target.value });
+    setRegisterCredentials({ ...registerCredentials, [target.name]: target.value });
   };
+
   const inputs: IInput[] = [
     {
-      inputName: 'username',
+      inputName: 'email',
       inputType: 'text',
-      label: 'Username',
-      placeholder: 'enter your username',
+      label: 'Email',
+      placeholder: 'Enter your email',
       onChangeHandler: onInputChange,
     },
     {
       inputName: 'password',
-      inputType: 'password',
+      inputType: 'text',
       label: 'Password',
-      placeholder: 'enter your password',
+      placeholder: 'Enter your password',
       onChangeHandler: onInputChange,
     },
   ];
   return (
-    <article className="user-login">
+    <article className="user-register">
       {inputs.map((input, index) => (
         <Input {...input} key={index} />
       ))}
-      <div className="user-login__cta">
-        <button className="user-login__cta__login-btn" onClick={loginUser} disabled={disableBtn} data-test="login-btn">
+      <div className="user-register__cta">
+        <button
+          className="user-register__cta__register-btn"
+          onClick={registerUser}
+          disabled={disableBtn}
+          data-test="btn-register"
+        >
           Login
         </button>
       </div>
@@ -62,4 +69,4 @@ const UserLogin: React.FC = () => {
   );
 };
 
-export default UserLogin;
+export default UserRegister;
