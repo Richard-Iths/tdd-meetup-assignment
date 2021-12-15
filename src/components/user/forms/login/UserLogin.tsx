@@ -49,7 +49,7 @@ const UserLogin: React.FC = () => {
     },
   ];
   return (
-    <article className="user-login">
+    <article className="user-login" data-test="user-login">
       {inputs.map((input, index) => (
         <Input {...input} key={index} />
       ))}

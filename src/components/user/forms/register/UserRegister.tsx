@@ -51,7 +51,7 @@ const UserRegister: React.FC = () => {
     },
   ];
   return (
-    <article className="user-register">
+    <article className="user-register" data-test="user-register">
       {inputs.map((input, index) => (
         <Input {...input} key={index} />
       ))}
