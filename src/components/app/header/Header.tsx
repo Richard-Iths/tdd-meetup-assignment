@@ -1,16 +1,59 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { userState } from '../../../recoil/atoms/user';
-import UserModal from '../../user/modals/auth/Auth';
+import AuthModal, { Props as IModalProps } from '../../user/modals/auth/Auth';
 import UserEvents from '../../user/modals/events/UserEvents';
+
+enum ModalType {
+  AUTH_MODAL = 'userModal',
+  EVENTS_MODAL = 'eventModal',
+}
 
 const Header: React.FC = ({}) => {
   const [user, setUser] = useRecoilState(userState);
+  const [authModal, setAuthModal] = useState<boolean>(false);
+  const [eventsModal, setEventsModal] = useState<boolean>(false);
+
+  const toggleModal = (modal: ModalType) => {
+    switch (modal) {
+      case ModalType.AUTH_MODAL: {
+        setAuthModal(!authModal);
+        break;
+      }
+      case ModalType.EVENTS_MODAL: {
+        setEventsModal(!eventsModal);
+        break;
+      }
+    }
+  };
+  const authModalProps: IModalProps = {
+    closeModal: toggleModal,
+    modalRef: ModalType.AUTH_MODAL,
+    visible: authModal,
+  };
+  const eventsModalProps: IModalProps = {
+    closeModal: toggleModal,
+    modalRef: ModalType.EVENTS_MODAL,
+    visible: eventsModal,
+  };
+
   return (
     <header className="app-header">
       <h2 data-test="header-logo">Awesome Meetups</h2>
-      {!user.token && <UserModal />}
-      {user.token && <UserEvents />}
+      <nav className="app-header__nav">
+        {!user.token && (
+          <i className="ri-user-fill" data-test="icon-auth-modal" onClick={() => toggleModal(ModalType.AUTH_MODAL)}></i>
+        )}
+        {user.token && (
+          <i
+            className="ri-calendar-event-fill icon"
+            data-test="icon-user-events-modal"
+            onClick={() => toggleModal(ModalType.EVENTS_MODAL)}
+          ></i>
+        )}
+      </nav>
+      {!user.token && <AuthModal {...authModalProps} />}
+      {user.token && <UserEvents {...eventsModalProps} />}
     </header>
   );
 };

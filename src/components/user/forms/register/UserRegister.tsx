@@ -62,7 +62,7 @@ const UserRegister: React.FC = () => {
           disabled={disableBtn}
           data-test="btn-register"
         >
-          Login
+          Register
         </button>
       </div>
     </article>
