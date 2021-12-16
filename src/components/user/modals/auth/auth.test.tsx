@@ -1,23 +1,23 @@
 import { render } from '@testing-library/react';
 import React from 'react';
 import { mount } from 'enzyme';
-import UserModal from './UserModal';
-import UserLogin from '../forms/login/UserLogin';
+import AuthModal from './Auth
+import UserLogin from '../../forms/login/UserLogin';
 import { RecoilRoot } from 'recoil';
 
-describe('UserModal.tsx', () => {
+describe('AuthModal.tsx', () => {
   describe('Smoke tests', () => {
-    it('should render UserModal component', () => {
+    it('should render AuthModal component', () => {
       render(
         <RecoilRoot>
-          <UserModal />
+          <AuthModal />
         </RecoilRoot>
       );
     });
     it('should render UserLogin component', () => {
       const wrapper = mount(
         <RecoilRoot>
-          <UserModal />
+          <AuthModal />
         </RecoilRoot>
       );
       const userLogin = wrapper.find(UserLogin);
@@ -28,7 +28,7 @@ describe('UserModal.tsx', () => {
     it('should display UserLogin Component when showing modal', () => {
       const wrapper = mount(
         <RecoilRoot>
-          <UserModal />
+          <AuthModal />
         </RecoilRoot>
       );
       const userRegister = wrapper.find('[data-test="user-register"]');
@@ -39,7 +39,7 @@ describe('UserModal.tsx', () => {
     it('should be able to change to UserRegister Component', () => {
       const wrapper = mount(
         <RecoilRoot>
-          <UserModal />
+          <AuthModal />
         </RecoilRoot>
       );
 
@@ -52,7 +52,7 @@ describe('UserModal.tsx', () => {
     it('should be able to switchback to UserLogin Component', () => {
       const wrapper = mount(
         <RecoilRoot>
-          <UserModal />
+          <AuthModal />
         </RecoilRoot>
       );
       let registerLink = wrapper.find('[data-test="link-register"]');

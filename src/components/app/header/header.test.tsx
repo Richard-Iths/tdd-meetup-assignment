@@ -2,14 +2,13 @@ import { render } from '@testing-library/react';
 import React from 'react';
 import { mount } from 'enzyme';
 import Header from './Header';
-import UserModal from '../../user/modals/UserModal';
+import UserModal from '../../user/modals/auth/Auth';
 import { RecoilRoot } from 'recoil';
-import UserEvents from '../../user/events/UserEvents';
+import UserEvents from '../../user/modals/events/UserEvents';
 import { UserState, userState } from '../../../recoil/atoms/user';
-import { RecoilObserver } from '../../../recoil/observer';
 
 describe('Header.tsx', () => {
-  const stateChange = jest.fn();
+  const recoilUserState: UserState = { administratedEvents: [], attendingEvents: [], token: null };
   describe('Smoke tests', () => {
     it('Should render header component', () => {
       render(
@@ -32,10 +31,9 @@ describe('Header.tsx', () => {
     });
 
     describe('Authorized user', () => {
-      it('should render UserSettings when user is authorized', () => {
+      it('should render UserEvents when user is authorized', () => {
         const wrapper = mount(
-          <RecoilRoot>
-            <RecoilObserver<UserState> node={userState} onChange={stateChange} />
+          <RecoilRoot initializeState={(snap) => snap.set(userState, { ...recoilUserState, token: '222' })}>
             <Header />
           </RecoilRoot>
         );

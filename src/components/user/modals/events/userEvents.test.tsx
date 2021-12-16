@@ -2,11 +2,11 @@ import { act, render } from '@testing-library/react';
 import React from 'react';
 import { mount } from 'enzyme';
 import UserEvents from './UserEvents';
-import UsersRepository from '../../../repositories/users';
-import { Event } from '../../../models';
+import UsersRepository from '../../../../repositories/users';
+import { Event } from '../../../../models';
 import { RecoilRoot } from 'recoil';
 import EventList from './list/EventList';
-import mockData from '../../../repositories/mock/mockData';
+import mockData from '../../../../repositories/mock/mockData';
 
 afterAll(() => {
   jest.clearAllMocks();

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Event } from '../../../../../models';
+import { Event } from '../../../../../../models';
 interface Props {
   event: Event;
 }

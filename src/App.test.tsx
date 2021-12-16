@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react';
 import App from './App';
 import React from 'react';
-import { shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import LandingPage from './pages/Landing/Landing';
 import Header from './components/app/header/Header';
 import { RecoilRoot } from 'recoil';
@@ -16,7 +16,7 @@ describe('App.tsx', () => {
       );
     });
     it('should render landing page', () => {
-      const wrapper = shallow(
+      const wrapper = mount(
         <RecoilRoot>
           <App />
         </RecoilRoot>
@@ -25,12 +25,12 @@ describe('App.tsx', () => {
       expect(landingPage.exists()).toBe(true);
     });
     it('should render header component', () => {
-      const wrapper = shallow(
+      const wrapper = mount(
         <RecoilRoot>
           <App />
         </RecoilRoot>
       );
-      const header = wrapper.find(<Header />);
+      const header = wrapper.find(Header);
       expect(header.exists()).toBe(true);
     });
   });

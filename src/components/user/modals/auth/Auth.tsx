@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import UserLogin from '../forms/login/UserLogin';
-import UserRegister from '../forms/register/UserRegister';
+import UserLogin from '../../forms/login/UserLogin';
+import UserRegister from '../../forms/register/UserRegister';
 
 type FormState = 'userLogin' | 'userRegister';
 
-const UserModal: React.FC = () => {
+const AuthModal: React.FC = () => {
   const [formState, setFormState] = useState<FormState>('userLogin');
   const changeFormState = (state: FormState) => setFormState(state);
   const handleFormState = (state: FormState): boolean => formState === state;
@@ -37,4 +37,4 @@ const UserModal: React.FC = () => {
   );
 };
 
-export default UserModal;
+export default AuthModal;

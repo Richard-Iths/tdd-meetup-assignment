@@ -2,9 +2,9 @@ import { render } from '@testing-library/react';
 import React from 'react';
 import { mount, shallow } from 'enzyme';
 import ListItem from './ListItem';
-import EventCard from '../../../../events/cards/EventCard';
-import { Event } from '../../../../../models';
-import mockData from '../../../../../repositories/mock/mockData';
+import EventCard from '../../../../../events/cards/EventCard';
+import { Event } from '../../../../../../models';
+import mockData from '../../../../../../repositories/mock/mockData';
 
 describe('ListItem.tsx', () => {
   const event: Event = { ...mockData.events[0] };

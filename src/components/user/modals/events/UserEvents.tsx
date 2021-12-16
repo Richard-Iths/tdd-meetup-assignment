@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
-import { userState } from '../../../recoil/atoms/user';
-import UsersRepository from '../../../repositories/users';
+import { userState } from '../../../../recoil/atoms/user';
+import UsersRepository from '../../../../repositories/users';
 import EventList from './list/EventList';
 
 const UserSettings: React.FC = () => {
