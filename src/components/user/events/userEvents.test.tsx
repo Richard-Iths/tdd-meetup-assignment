@@ -6,27 +6,15 @@ import UsersRepository from '../../../repositories/users';
 import { Event } from '../../../models';
 import { RecoilRoot } from 'recoil';
 import EventList from './list/EventList';
+import mockData from '../../../repositories/mock/mockData';
 
 afterAll(() => {
   jest.clearAllMocks();
 });
 
 describe('UserEvents.tsx', () => {
-  const event: Event = {
-    created_at: new Date(),
-    daley_visitors: 100,
-    date: new Date(),
-    description: 'Camping the the forrest',
-    due_date: new Date(),
-    event_admin: 'admin',
-    image: 'img',
-    max_attendees: 50,
-    min_attendees: 45,
-    name: 'Camping trip',
-    place: 'in the city',
-    time: '15:50',
-    updated_at: new Date(),
-  };
+  const event: Event = { ...mockData.events[0] };
+
   describe('Smoke tests', () => {
     it('Should render UserEvents component', () => {
       render(

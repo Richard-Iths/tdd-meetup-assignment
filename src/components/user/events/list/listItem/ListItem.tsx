@@ -1,7 +1,10 @@
 import React from 'react';
-
-const ListItem: React.FC = () => {
-  return <></>;
+import { Event } from '../../../../../models';
+interface Props {
+  event: Event;
+}
+const ListItem: React.FC<Props> = ({ event }) => {
+  return <li></li>;
 };
 
 export default ListItem;

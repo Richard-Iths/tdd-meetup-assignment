@@ -24,5 +24,5 @@ export type LoginResponse = GlobalResponse<TokenResponse & GlobalSuccessResponse
 export type SuccessResponse = GlobalResponse<GlobalSuccessResponse>;
 
 export type EventsEndpoint = '/events' | '/events/:id';
-export type UsersEndpoint = '/users' | '/users/:id' | '/users/events';
+export type UsersEndpoint = '/users' | '/users/:id' | '/users/events' | '/users/events/:id';
 export type AuthEndPoint = '/auth';

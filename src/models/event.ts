@@ -1,4 +1,5 @@
 export interface Event {
+  id: string;
   name: string;
   event_admin: string;
   description: string;
@@ -14,9 +15,8 @@ export interface Event {
   image: string;
 }
 
-export interface EventComments {
+export interface EventComment {
   event_id: string;
-  user_id: string;
   comment: string;
   created_at: Date;
   updated_at: Date;
