@@ -12,6 +12,7 @@ export default abstract class Crud<T> {
     token?: string
   ): Promise<AxiosResponse<SuccessResponse, any>>;
   protected abstract findAll<S extends string>(url: S, token?: string): Promise<AxiosResponse<T[]>>;
+  protected abstract deleteById<S extends string>(url: S, id: string): Promise<AxiosResponse<SuccessResponse>>;
 
   protected abstract setAuthorizationToken(token: string): void;
 }

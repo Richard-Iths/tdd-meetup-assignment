@@ -1,11 +1,12 @@
 import { User } from '../models';
 import BaseRepository from './base';
-import { AuthEndPoint, EventsResponse, LoginResponse, UsersEndpoint } from './types';
+import { AuthEndPoint, EventsResponse, LoginResponse, SuccessResponse, UsersEndpoint } from './types';
 
 interface IRepository {
   loginUser(username: string, password: string): Promise<LoginResponse | void>;
   registerUser(email: string, password: string): Promise<LoginResponse | void>;
   getUserEvents(token: string): Promise<EventsResponse | void>;
+  deleteUserEvent(eventId: string, token: string): Promise<SuccessResponse | void>;
 }
 
 export default class UsersRepository extends BaseRepository<User> implements IRepository {
@@ -36,5 +37,13 @@ export default class UsersRepository extends BaseRepository<User> implements IRe
     } catch (e) {
       console.log(e, 'error');
     }
+  }
+
+  async deleteUserEvent(eventId: string, token: string): Promise<void | SuccessResponse> {
+    try {
+      this.setAuthorizationToken(token);
+      const { data } = await this.deleteById<UsersEndpoint>('/users/events/:id', eventId);
+      return { ...data };
+    } catch (_) {}
   }
 }

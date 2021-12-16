@@ -19,4 +19,9 @@ export default class BaseRepository<T> extends Crud<T> {
   protected findAll<S extends String>(url: S, token?: string): Promise<AxiosResponse<T[], any>> {
     throw new Error('Method not implemented.');
   }
+
+  protected async deleteById<S extends string>(url: S, id: string): Promise<AxiosResponse<SuccessResponse, any>> {
+    const newUrl = url.replace(':id', id);
+    return await this.axiosInstance.delete(newUrl);
+  }
 }
