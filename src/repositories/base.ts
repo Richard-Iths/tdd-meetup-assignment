@@ -16,8 +16,12 @@ export default class BaseRepository<T> extends Crud<T> {
     }
     return await this.axiosInstance.get(url, { data });
   }
-  protected findAll<S extends String>(url: S, token?: string): Promise<AxiosResponse<T[], any>> {
-    throw new Error('Method not implemented.');
+  protected async findAll<S extends string>(url: S, id?: string): Promise<AxiosResponse<T[], any>> {
+    let newUrl = url as string;
+    if (id) {
+      newUrl = newUrl.replace(':id', id);
+    }
+    return await this.axiosInstance.get(newUrl);
   }
 
   protected async deleteById<S extends string>(url: S, id: string): Promise<AxiosResponse<SuccessResponse, any>> {

@@ -92,12 +92,14 @@ const eventComments: EventComment[] = [
     created_at: new Date(),
     event_id: '123',
     updated_at: new Date(),
+    name: 'Lasse',
   },
   {
     comment: 'good stuff',
     created_at: new Date(),
     event_id: '123',
     updated_at: new Date(),
+    name: 'Lasse',
   },
 ];
 

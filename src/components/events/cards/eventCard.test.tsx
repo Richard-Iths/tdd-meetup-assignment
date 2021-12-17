@@ -37,7 +37,7 @@ describe('EventCard.tsx', () => {
       expect(eventCard.props().event).toStrictEqual(event);
     });
 
-    describe('Unauthorized user', () => {
+    describe('All users', () => {
       it('should be able to see comment icon', () => {
         const wrapper = mount(
           <RecoilRoot>
@@ -55,6 +55,19 @@ describe('EventCard.tsx', () => {
         );
         const editIcon = wrapper.find('[data-test="icon-edit"]');
         expect(editIcon.exists()).toBe(false);
+      });
+      it('should be able to see comments modal when comments icon is clicked', () => {
+        const wrapper = mount(
+          <RecoilRoot>
+            <EventCard event={{ ...event }} />
+          </RecoilRoot>
+        );
+        let commentsModal = wrapper.find('[data-test="comments-modal"]');
+        expect(commentsModal.exists()).toBe(false);
+        const commentsIcon = wrapper.find('[data-test="icon-comment"]');
+        commentsIcon.simulate('click');
+        commentsModal = wrapper.find('[data-test="comments-modal"]');
+        expect(commentsModal.exists()).toBe(true);
       });
     });
     describe('Event Admin', () => {

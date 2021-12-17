@@ -3,8 +3,12 @@ import { useRecoilState } from 'recoil';
 import { Event } from '../../../models';
 import { userState } from '../../../recoil/atoms/user';
 import UsersRepository from '../../../repositories/users';
+import CommentsModal, { Props as ModalProps } from '../modals/comments/Comments';
 interface Props {
   event: Event;
+}
+enum ModalRef {
+  COMMENTS_MODAL = 'commentsModal',
 }
 const EventCard: React.FC<Props> = ({ event }) => {
   const [user, setUser] = useRecoilState(userState);
@@ -26,18 +30,43 @@ const EventCard: React.FC<Props> = ({ event }) => {
       }
     }
   };
+  const [commentsModal, setCommentsModal] = useState<boolean>(false);
+  const toggleModal = (modalRef: ModalRef) => {
+    switch (modalRef) {
+      case ModalRef.COMMENTS_MODAL: {
+        setCommentsModal(!commentsModal);
+        break;
+      }
+      default:
+        break;
+    }
+  };
+  const commentsModalState: ModalProps = {
+    closeModal: toggleModal,
+    eventId: event.id,
+    modalRef: ModalRef.COMMENTS_MODAL,
+    visible: commentsModal,
+  };
 
   return (
     <article className="event-card">
       <div className="event-card__header">
         <div className="event-card__cta">
-          <i className="ri-chat-1-fill icon" data-test="icon-comment"></i>
+          <i
+            className="ri-chat-1-fill icon"
+            data-test="icon-comment"
+            onClick={() => {
+              toggleModal(ModalRef.COMMENTS_MODAL);
+            }}
+          ></i>
           {user.token && isEventAdmin && <i className="ri-edit-fill icon" data-test="icon-edit"></i>}
           {user.token && isEventAdmin && (
             <i className="ri-edit-fill icon" data-test="icon-remove" onClick={removeEvent}></i>
           )}
         </div>
       </div>
+
+      <CommentsModal {...commentsModalState} />
     </article>
   );
 };

@@ -1,4 +1,4 @@
-import { Event, Attendee, User } from '../models';
+import { Event, Attendee, User, EventComment } from '../models';
 
 export interface GlobalResponse<T> {
   data: T;
@@ -23,6 +23,8 @@ export type LoginResponse = GlobalResponse<TokenResponse & GlobalSuccessResponse
 
 export type SuccessResponse = GlobalResponse<GlobalSuccessResponse>;
 
-export type EventsEndpoint = '/events' | '/events/:id';
+export type EventCommentsResponse = GlobalResponse<EventComment[]>;
+
+export type EventsEndpoint = '/events' | '/events/:id' | '/events/:id/comments';
 export type UsersEndpoint = '/users' | '/users/:id' | '/users/events' | '/users/events/:id';
 export type AuthEndPoint = '/auth';
