@@ -3,7 +3,9 @@ import { useRecoilState } from 'recoil';
 import { EventComment } from '../../../../models';
 import { eventCommentsState } from '../../../../recoil/atoms/comments';
 import { userState } from '../../../../recoil/atoms/user';
+import { repoFactory } from '../../../../repositories';
 import EventsRepository from '../../../../repositories/events';
+import EventsMockedRepository from '../../../../repositories/mock/events';
 import BaseModal, { Props as IBaseModal } from '../../../modals/BaseModal';
 import Comment from './comment/Comment';
 export interface Props extends IBaseModal {
@@ -17,7 +19,7 @@ const CommentsModal: React.FC<Props> = ({ eventId, modalRef, visible, closeModal
 
   useEffect(() => {
     const getEventComments = async () => {
-      const eventRepository = new EventsRepository();
+      const eventRepository = repoFactory('eventRepository');
       const response = await eventRepository.getEventComments(eventId);
       if (response) {
         setEventComments([...response.data]);
@@ -29,6 +31,7 @@ const CommentsModal: React.FC<Props> = ({ eventId, modalRef, visible, closeModal
     };
 
     const existingComments = comments.eventComments.find((event) => event.eventId === eventId);
+
     if (!existingComments) {
       getEventComments();
     } else {

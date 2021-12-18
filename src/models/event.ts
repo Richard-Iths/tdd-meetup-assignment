@@ -21,4 +21,5 @@ export interface EventComment {
   created_at: Date;
   updated_at: Date;
   name: string;
+  user_id: string;
 }

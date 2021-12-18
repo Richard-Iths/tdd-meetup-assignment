@@ -1,15 +1,8 @@
 import { Event } from '../models';
 import BaseRepository from './base';
-import { EventCommentsResponse, EventsEndpoint, SuccessResponse } from './types';
+import { EventCommentsResponse, EventsEndpoint, IEventRepository, SuccessResponse } from './types';
 
-interface IRepository {
-  createEvent(event: Event): Promise<SuccessResponse | void>;
-  findAllEvents(): Promise<Event[]>;
-  deleteEvent(id: string, token: string): Promise<SuccessResponse | void>;
-  getEventComments(id: string): Promise<EventCommentsResponse | void>;
-}
-
-export default class EventsRepository extends BaseRepository<Event> implements IRepository {
+export default class EventsRepository extends BaseRepository<Event> implements IEventRepository {
   async createEvent(event: Event): Promise<SuccessResponse | void> {
     try {
       const { data } = await this.create<EventsEndpoint>('/events', event);

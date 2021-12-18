@@ -28,3 +28,17 @@ export type EventCommentsResponse = GlobalResponse<EventComment[]>;
 export type EventsEndpoint = '/events' | '/events/:id' | '/events/:id/comments';
 export type UsersEndpoint = '/users' | '/users/:id' | '/users/events' | '/users/events/:id';
 export type AuthEndPoint = '/auth';
+
+export interface IUserRepository {
+  loginUser(username: string, password: string): Promise<LoginResponse | void>;
+  registerUser(email: string, password: string): Promise<LoginResponse | void>;
+  getUserEvents(token: string): Promise<EventsResponse | void>;
+  deleteUserEvent(eventId: string, token: string): Promise<SuccessResponse | void>;
+}
+
+export interface IEventRepository {
+  createEvent(event: Event): Promise<SuccessResponse | void>;
+  findAllEvents(): Promise<Event[]>;
+  deleteEvent(id: string, token: string): Promise<SuccessResponse | void>;
+  getEventComments(id: string): Promise<EventCommentsResponse | void>;
+}

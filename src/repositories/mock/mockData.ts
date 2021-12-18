@@ -1,4 +1,4 @@
-import { Event, EventComment } from '../../models';
+import { Attendee, Event, EventComment, User } from '../../models';
 
 const events: Event[] = [
   {
@@ -8,7 +8,7 @@ const events: Event[] = [
     date: new Date(),
     description: 'Camping the the forrest',
     due_date: new Date(),
-    event_admin: 'admin',
+    event_admin: 'SpongeBob',
     image: 'img',
     max_attendees: 50,
     min_attendees: 45,
@@ -24,7 +24,7 @@ const events: Event[] = [
     date: new Date(),
     description: 'Camping the the forrest',
     due_date: new Date(),
-    event_admin: 'admin',
+    event_admin: 'SpongeBob',
     image: 'img',
     max_attendees: 50,
     min_attendees: 45,
@@ -40,7 +40,7 @@ const events: Event[] = [
     date: new Date(),
     description: 'Camping the the forrest',
     due_date: new Date(),
-    event_admin: 'admin',
+    event_admin: 'SpiderMan',
     image: 'img',
     max_attendees: 50,
     min_attendees: 45,
@@ -86,6 +86,32 @@ const userEvents: Event[] = [
   },
 ];
 
+const eventUser: Attendee[] = [
+  {
+    event_id: '123',
+    user_id: '1001',
+  },
+  {
+    event_id: '123',
+    user_id: '1002',
+  },
+];
+
+const users: User[] = [
+  {
+    email: 'user1@test.com',
+    name: 'Bob',
+    last_name: 'Sponge',
+    username: 'SpongeBob',
+  },
+  {
+    email: 'user2@test.com',
+    name: 'Spider',
+    last_name: 'Man',
+    username: 'SpiderMan',
+  },
+];
+
 const eventComments: EventComment[] = [
   {
     comment: 'good stuff',
@@ -93,6 +119,7 @@ const eventComments: EventComment[] = [
     event_id: '123',
     updated_at: new Date(),
     name: 'Lasse',
+    user_id: '123',
   },
   {
     comment: 'good stuff',
@@ -100,6 +127,7 @@ const eventComments: EventComment[] = [
     event_id: '123',
     updated_at: new Date(),
     name: 'Lasse',
+    user_id: '123',
   },
 ];
 
@@ -107,6 +135,8 @@ interface MockData {
   eventComments: EventComment[];
   events: Event[];
   userEvents: Event[];
+  users: User[];
+  eventUser: Attendee[];
 }
 
-export default Object.assign({}, { eventComments, events, userEvents }) as MockData;
+export default Object.assign({}, { eventComments, events, userEvents, users, eventUser }) as MockData;

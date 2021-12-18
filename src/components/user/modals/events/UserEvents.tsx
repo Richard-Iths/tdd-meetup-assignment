@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
 import { userState } from '../../../../recoil/atoms/user';
-import UsersRepository from '../../../../repositories/users';
+import { repoFactory } from '../../../../repositories';
 import BaseModal, { Props as IBaseModal } from '../../../modals/BaseModal';
 import EventList from './list/EventList';
 
@@ -11,7 +11,7 @@ const UserEventsModal: React.FC<Props> = ({ closeModal, modalRef, visible }) => 
   const [user, setUser] = useRecoilState(userState);
   useEffect(() => {
     const getEvents = async () => {
-      const userRepo = new UsersRepository();
+      const userRepo = repoFactory('userRepository');
       const { token } = user;
       if (token) {
         const response = await userRepo.getUserEvents(token);

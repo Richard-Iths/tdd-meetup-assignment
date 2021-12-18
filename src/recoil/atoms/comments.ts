@@ -1,4 +1,4 @@
-import { atom, selectorFamily } from 'recoil';
+import { atom } from 'recoil';
 import { EventComment } from '../../models';
 type CommentEvent = { eventId: string; comments: EventComment[] };
 export interface CommentsState {

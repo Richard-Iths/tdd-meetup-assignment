@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import Input, { Props as IInput } from '../../../input/Input';
 import { userState } from '../../../../recoil/atoms/user';
-import UsersRepository from '../../../../repositories/users';
+import { repoFactory } from '../../../../repositories';
 
 const UserLogin: React.FC = () => {
   const [user, setUser] = useRecoilState(userState);
   const loginUser = async () => {
-    const userRepository = new UsersRepository();
+    const userRepository = repoFactory('userRepository');
     const { username, password } = loginCredentials;
     const response = await userRepository.loginUser(username, password);
     if (response) {
