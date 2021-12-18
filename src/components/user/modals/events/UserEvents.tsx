@@ -6,10 +6,9 @@ import BaseModal, { Props as IBaseModal } from '../../../modals/BaseModal';
 import EventList from './list/EventList';
 
 export interface Props extends IBaseModal {}
-
+type UserStateEvent = 'attendingEvents' | 'administratedEvents';
 const UserEventsModal: React.FC<Props> = ({ closeModal, modalRef, visible }) => {
   const [user, setUser] = useRecoilState(userState);
-
   useEffect(() => {
     const getEvents = async () => {
       const userRepo = new UsersRepository();
@@ -23,11 +22,11 @@ const UserEventsModal: React.FC<Props> = ({ closeModal, modalRef, visible }) => 
     };
     getEvents();
   }, []);
-
+  const getEvents = (eventType: UserStateEvent) => (user[eventType].length > 0 ? [...user[eventType]] : undefined);
   return (
     <BaseModal {...{ visible, closeModal, modalRef }}>
       <section className="user-events-modal" data-test="user-events-modal">
-        <EventList />
+        <EventList events={getEvents('attendingEvents')} />
       </section>
     </BaseModal>
   );

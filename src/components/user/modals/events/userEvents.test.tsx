@@ -41,7 +41,17 @@ describe('UserEvents.tsx', () => {
     });
   });
 
-  describe('Black box tests', () => {});
+  describe('Black box tests', () => {
+    it('should have an attending events section', () => {
+      const wrapper = mount(
+        <RecoilRoot>
+          <UserEvents {...props} />
+        </RecoilRoot>
+      );
+      const attendingSection = wrapper.find('[data-test="event-list-attending"');
+      expect(attendingSection.exists()).toBe(true);
+    });
+  });
 
   describe('White box tests', () => {
     it('should get user events on component load', async () => {

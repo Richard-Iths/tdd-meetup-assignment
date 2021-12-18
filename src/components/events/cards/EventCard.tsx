@@ -49,7 +49,7 @@ const EventCard: React.FC<Props> = ({ event }) => {
   };
 
   return (
-    <article className="event-card">
+    <article className="event-card" data-test="card-event">
       <div className="event-card__header">
         <div className="event-card__cta">
           <i
