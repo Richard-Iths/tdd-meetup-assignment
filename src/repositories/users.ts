@@ -1,13 +1,20 @@
 import { User } from '../models';
 import BaseRepository from './base';
-import { AuthEndPoint, EventsResponse, LoginResponse, SuccessResponse, UsersEndpoint, IUserRepository } from './types';
+import {
+  AuthEndPoint,
+  LoginResponse,
+  SuccessResponse,
+  UsersEndpoint,
+  IUserRepository,
+  UserEventsResponse,
+} from './types';
 
 export default class UsersRepository extends BaseRepository<User> implements IUserRepository {
-  async getUserEvents(token: string): Promise<void | EventsResponse> {
+  async getUserEvents(token: string): Promise<void | UserEventsResponse> {
     try {
       const url: UsersEndpoint = '/users/events';
       this.setAuthorizationToken(token);
-      const { data } = await this.axiosInstance.get<EventsResponse>(url);
+      const { data } = await this.axiosInstance.get<UserEventsResponse>(url);
       return { ...data };
     } catch (e) {
       console.log(e);

@@ -16,7 +16,11 @@ const UserEventsModal: React.FC<Props> = ({ closeModal, modalRef, visible }) => 
       if (token) {
         const response = await userRepo.getUserEvents(token);
         if (response) {
-          setUser({ ...user, attendingEvents: [...response.data] });
+          setUser({
+            ...user,
+            attendingEvents: [...response.data.attending_events],
+            administratedEvents: [...response.data.administrated_events],
+          });
         }
       }
     };
@@ -26,6 +30,11 @@ const UserEventsModal: React.FC<Props> = ({ closeModal, modalRef, visible }) => 
   return (
     <BaseModal {...{ visible, closeModal, modalRef }}>
       <section className="user-events-modal" data-test="user-events-modal">
+        <section className="user-events-modal__attending-events" data-test="user-event-attending">
+          <EventList events={getEvents('attendingEvents')} />
+        </section>
+      </section>
+      <section className="user-events-modal__attending-events" data-test="user-event-administrated">
         <EventList events={getEvents('attendingEvents')} />
       </section>
     </BaseModal>

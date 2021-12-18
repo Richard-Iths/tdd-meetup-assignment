@@ -1,4 +1,4 @@
-import { EventsResponse, IUserRepository, LoginResponse, SuccessResponse } from '../types';
+import { EventsResponse, IUserRepository, LoginResponse, SuccessResponse, UserEventsResponse } from '../types';
 import MockDb, { timeOutValue } from './mockDb';
 const mocked = MockDb.initMockDb();
 
@@ -17,12 +17,17 @@ export default class UsersMockRepository implements IUserRepository {
   registerUser(email: string, password: string): Promise<void | LoginResponse> {
     throw new Error('Method not implemented.');
   }
-  getUserEvents(token: string): Promise<void | EventsResponse> {
+  getUserEvents(token: string): Promise<void | UserEventsResponse> {
     return new Promise((resolve) => {
       const eventsTable = mocked.getEventsTable();
-      const userEvents = eventsTable.filter((event) => event.event_admin === token);
+      const userEventTable = mocked.getEventUserTable();
+      const userEvents = userEventTable.filter((event) => event.user_id === token);
+      const attendingEvents = eventsTable.filter((event) =>
+        userEvents.find((userEvent) => userEvent.event_id === event.id)
+      );
+      const administratedEvents = eventsTable.filter((event) => event.event_admin === token);
       timeOutValue(() => {
-        resolve({ data: [...userEvents] });
+        resolve({ data: { administrated_events: [...administratedEvents], attending_events: [...attendingEvents] } });
       });
     });
   }

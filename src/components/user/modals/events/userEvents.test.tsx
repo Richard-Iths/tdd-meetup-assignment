@@ -9,9 +9,7 @@ import EventList from './list/EventList';
 import mockData from '../../../../repositories/mock/mockData';
 import { userState, UserState } from '../../../../recoil/atoms/user';
 
-afterAll(() => {
-  jest.clearAllMocks();
-});
+let repoSpy: jest.SpyInstance;
 
 describe('UserEvents.tsx', () => {
   const event: Event = { ...mockData.events[0] };
@@ -21,6 +19,15 @@ describe('UserEvents.tsx', () => {
     modalRef: 'my-modal',
   };
   const userRecoilState: UserState = { administratedEvents: [], attendingEvents: [], token: '222' };
+
+  beforeAll(() => {
+    repoSpy = jest
+      .spyOn(UsersRepository.prototype, 'getUserEvents')
+      .mockResolvedValue({ data: { administrated_events: [{ ...event }], attending_events: [{ ...event }] } });
+  });
+  afterAll(() => {
+    jest.clearAllMocks();
+  });
   describe('Smoke tests', () => {
     it('Should render UserEvents component', () => {
       render(
@@ -48,16 +55,27 @@ describe('UserEvents.tsx', () => {
           <UserEvents {...props} />
         </RecoilRoot>
       );
-      const attendingSection = wrapper.find('[data-test="event-list-attending"');
+      const attendingSection = wrapper.find('[data-test="user-event-attending"]');
       expect(attendingSection.exists()).toBe(true);
+      expect(attendingSection.children.length).toBe(1);
+    });
+    it('should have an administrated events section', () => {
+      const wrapper = mount(
+        <RecoilRoot>
+          <UserEvents {...props} />
+        </RecoilRoot>
+      );
+      const attendingSection = wrapper.find('[data-test="user-event-administrated"]');
+      expect(attendingSection.exists()).toBe(true);
+      expect(attendingSection.children.length).toBe(1);
     });
   });
 
   describe('White box tests', () => {
     it('should get user events on component load', async () => {
-      const repoSpy = jest
-        .spyOn(UsersRepository.prototype, 'getUserEvents')
-        .mockResolvedValue({ data: [{ ...event }] });
+      // const repoSpy = jest
+      //   .spyOn(UsersRepository.prototype, 'getUserEvents')
+      //   .mockResolvedValue({ data: [{ ...event }] });
 
       expect(repoSpy).toHaveBeenCalledTimes(0);
       await act(async () => {

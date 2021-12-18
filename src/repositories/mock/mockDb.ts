@@ -20,7 +20,7 @@ const db: IDb = {
 interface IMockDb {
   getUsersTable(): IDbUser[];
   getEventsTable(): Event[];
-  getEventUSerTable(): Attendee[];
+  getEventUserTable(): Attendee[];
   getEventCommentTable(): EventComment[];
 }
 
@@ -30,7 +30,7 @@ export default class MockDb implements IMockDb {
   getEventsTable(): Event[] {
     return db['events'];
   }
-  getEventUSerTable(): Attendee[] {
+  getEventUserTable(): Attendee[] {
     return db['event_user'];
   }
   getEventCommentTable(): EventComment[] {

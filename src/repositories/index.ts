@@ -15,7 +15,6 @@ export function repoFactory(r: repoKeyUser): IUserRepository;
 export function repoFactory(r: repoKeyUser | repoKeyEvent): any {
   switch (r) {
     case 'userRepository': {
-      console.log('here');
       return checkDev() ? new UsersMockRepository() : new UsersRepository();
     }
     case 'eventRepository': {

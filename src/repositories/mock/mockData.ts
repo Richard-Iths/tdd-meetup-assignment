@@ -40,7 +40,7 @@ const events: Event[] = [
     date: new Date(),
     description: 'Camping the the forrest',
     due_date: new Date(),
-    event_admin: 'SpiderMan',
+    event_admin: 'AnnUser',
     image: 'img',
     max_attendees: 50,
     min_attendees: 45,
@@ -88,12 +88,12 @@ const userEvents: Event[] = [
 
 const eventUser: Attendee[] = [
   {
-    event_id: '123',
-    user_id: '1001',
+    event_id: '789',
+    user_id: 'SpongeBob',
   },
   {
-    event_id: '123',
-    user_id: '1002',
+    event_id: '789',
+    user_id: 'SpiderMan',
   },
 ];
 
@@ -116,7 +116,7 @@ const eventComments: EventComment[] = [
   {
     comment: 'good stuff',
     created_at: new Date(),
-    event_id: '123',
+    event_id: '789',
     updated_at: new Date(),
     name: 'Lasse',
     user_id: '123',
@@ -124,7 +124,7 @@ const eventComments: EventComment[] = [
   {
     comment: 'good stuff',
     created_at: new Date(),
-    event_id: '123',
+    event_id: '789',
     updated_at: new Date(),
     name: 'Lasse',
     user_id: '123',
