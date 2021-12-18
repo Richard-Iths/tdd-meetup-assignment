@@ -32,6 +32,15 @@ export default class UsersMockRepository implements IUserRepository {
     });
   }
   deleteUserEvent(eventId: string, token: string): Promise<void | SuccessResponse> {
-    throw new Error('Method not implemented.');
+    return new Promise((resolve) => {
+      const eventsTable = mocked.getEventsTable();
+      const eventIndex = eventsTable.findIndex((event) => event.id === eventId && token === event.event_admin);
+      if (eventIndex) {
+        eventsTable.splice(eventIndex, 1);
+        timeOutValue(() => {
+          resolve({ data: { message: 'success' } });
+        });
+      }
+    });
   }
 }

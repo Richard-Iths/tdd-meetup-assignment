@@ -1,6 +1,6 @@
 import { Event } from '../models';
 import BaseRepository from './base';
-import { EventCommentsResponse, EventsEndpoint, IEventRepository, SuccessResponse } from './types';
+import { EventCommentsResponse, EventsEndpoint, EventsResponse, IEventRepository, SuccessResponse } from './types';
 
 export default class EventsRepository extends BaseRepository<Event> implements IEventRepository {
   async createEvent(event: Event): Promise<SuccessResponse | void> {
@@ -9,8 +9,11 @@ export default class EventsRepository extends BaseRepository<Event> implements I
       return { ...data };
     } catch (_) {}
   }
-  findAllEvents(): Promise<Event[]> {
-    throw new Error('Method not implemented.');
+  async getEvents(): Promise<EventsResponse | void> {
+    try {
+      const { data } = await this.findAll<EventsEndpoint>('/events');
+      return { data: [...data] };
+    } catch (_) {}
   }
   async deleteEvent(id: string, token: string): Promise<void | SuccessResponse> {
     try {

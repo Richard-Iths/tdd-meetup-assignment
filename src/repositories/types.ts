@@ -42,7 +42,7 @@ export interface IUserRepository {
 
 export interface IEventRepository {
   createEvent(event: Event): Promise<SuccessResponse | void>;
-  findAllEvents(): Promise<Event[]>;
+  getEvents(): Promise<EventsResponse | void>;
   deleteEvent(id: string, token: string): Promise<SuccessResponse | void>;
   getEventComments(id: string): Promise<EventCommentsResponse | void>;
 }

@@ -73,10 +73,6 @@ describe('UserEvents.tsx', () => {
 
   describe('White box tests', () => {
     it('should get user events on component load', async () => {
-      // const repoSpy = jest
-      //   .spyOn(UsersRepository.prototype, 'getUserEvents')
-      //   .mockResolvedValue({ data: [{ ...event }] });
-
       expect(repoSpy).toHaveBeenCalledTimes(0);
       await act(async () => {
         mount(

@@ -69,6 +69,26 @@ describe('EventCard.tsx', () => {
         commentsModal = wrapper.find('[data-test="comments-modal"]');
         expect(commentsModal.exists()).toBe(true);
       });
+      it('should be able to see the name of the card', () => {
+        const wrapper = mount(
+          <RecoilRoot>
+            <EventCard event={{ ...event }} />
+          </RecoilRoot>
+        );
+        const contentSection = wrapper.find('[data-test="event-card-name"]');
+        expect(contentSection.exists()).toBe(true);
+        expect(contentSection.text()).toStrictEqual(event.name);
+      });
+      it('should have event description content', () => {
+        const wrapper = mount(
+          <RecoilRoot>
+            <EventCard event={{ ...event }} />
+          </RecoilRoot>
+        );
+        const contentSection = wrapper.find('[data-test="event-card-description"]');
+        expect(contentSection.exists()).toBe(true);
+        expect(contentSection.text()).toStrictEqual(event.description);
+      });
     });
     describe('Event Admin', () => {
       it('Even admin should be able to see edit event icon', () => {

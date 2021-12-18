@@ -31,10 +31,12 @@ const UserEventsModal: React.FC<Props> = ({ closeModal, modalRef, visible }) => 
     <BaseModal {...{ visible, closeModal, modalRef }}>
       <section className="user-events-modal" data-test="user-events-modal">
         <section className="user-events-modal__attending-events" data-test="user-event-attending">
+          <h3 className="user-modal__title"> Attending Events</h3>
           <EventList events={getEvents('attendingEvents')} />
         </section>
       </section>
       <section className="user-events-modal__attending-events" data-test="user-event-administrated">
+        <h3 className="user-modal__title">Administrated Events</h3>
         <EventList events={getEvents('attendingEvents')} />
       </section>
     </BaseModal>
