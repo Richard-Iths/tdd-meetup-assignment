@@ -3,6 +3,7 @@ import { useRecoilState } from 'recoil';
 import Input, { Props as IInput } from '../../../input/Input';
 import { userState } from '../../../../recoil/atoms/user';
 import { repoFactory } from '../../../../repositories';
+import './login.styles.scss';
 
 const UserLogin: React.FC = () => {
   const [user, setUser] = useRecoilState(userState);
@@ -49,7 +50,7 @@ const UserLogin: React.FC = () => {
     },
   ];
   return (
-    <article className="user-login" data-test="user-login">
+    <article className="user-login fade-in-animation" data-test="user-login">
       {inputs.map((input, index) => (
         <Input {...input} key={index} />
       ))}

@@ -1,4 +1,5 @@
 import React from 'react';
+import './input.styles.scss';
 export interface Props {
   inputName: string;
   inputType: React.InputHTMLAttributes<HTMLInputElement>['type'];

@@ -1,0 +1,8 @@
+@import '../../../assets/scss/', '../../../assets/scss/utils';
+.app-header {
+  background-color: getColor('primaryLight');
+  padding: 1.6rem 3.2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

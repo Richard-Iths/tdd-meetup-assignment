@@ -20,6 +20,13 @@ const LandingPage: React.FC = ({}) => {
   });
   return (
     <section className="landing">
+      <article className="landing-hero">
+        <h1 className="xl hide-mobile">
+          YOUR TIME,
+          <br />
+          YOUR PLACE <br /> YOUR INTERESTS
+        </h1>
+      </article>
       <div className="landing-events">
         {events.events.length > 0 && events.events.map((event) => <EventCard key={event.id} event={{ ...event }} />)}
       </div>

@@ -1,0 +1,21 @@
+@import '../../../../assets/scss/', '../../../../assets/scss/utils.scss', '../../../../assets/scss/animations.scss';
+.user-register {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 1.6rem;
+
+  &__cta {
+    &__register-btn {
+      padding: 1.6rem 3.2rem;
+      min-width: 100%;
+
+      border: none;
+      border-radius: 0.6rem;
+      background-color: getColor('accentDark');
+      color: getColor('primaryLight');
+      font-family: 'Montserrat', sans-serif;
+      display: block;
+    }
+  }
+}

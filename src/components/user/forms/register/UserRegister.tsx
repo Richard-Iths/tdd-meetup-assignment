@@ -3,6 +3,7 @@ import { useRecoilState } from 'recoil';
 import { userState } from '../../../../recoil/atoms/user';
 import UsersRepository from '../../../../repositories/users';
 import Input, { Props as IInput } from '../../../input/Input';
+import './register.styles.scss';
 
 const UserRegister: React.FC = () => {
   const [user, setUser] = useRecoilState(userState);
@@ -51,7 +52,7 @@ const UserRegister: React.FC = () => {
     },
   ];
   return (
-    <article className="user-register" data-test="user-register">
+    <article className="user-register fade-in-animation" data-test="user-register">
       {inputs.map((input, index) => (
         <Input {...input} key={index} />
       ))}

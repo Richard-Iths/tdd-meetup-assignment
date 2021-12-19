@@ -1,1 +1,5 @@
-@import "./colors", "./text";
+@import './colors', './text';
+
+.hide-mobile {
+  display: none;
+}

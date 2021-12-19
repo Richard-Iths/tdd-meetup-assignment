@@ -3,6 +3,7 @@ import { useRecoilState } from 'recoil';
 import { userState } from '../../../recoil/atoms/user';
 import AuthModal, { Props as IModalProps } from '../../user/modals/auth/Auth';
 import UserEvents from '../../user/modals/events/UserEvents';
+import './header.styles.scss';
 
 enum ModalType {
   AUTH_MODAL = 'userModal',
@@ -39,17 +40,23 @@ const Header: React.FC = ({}) => {
 
   return (
     <header className="app-header">
-      <h2 data-test="header-logo">Awesome Meetups</h2>
+      <h2 data-test="header-logo">AM</h2>
       <nav className="app-header__nav">
         {!user.token && (
-          <i className="ri-user-fill" data-test="icon-auth-modal" onClick={() => toggleModal(ModalType.AUTH_MODAL)}></i>
+          <i
+            className="ri-user-fill icon"
+            data-test="icon-auth-modal"
+            onClick={() => toggleModal(ModalType.AUTH_MODAL)}
+          ></i>
         )}
         {user.token && (
-          <i
-            className="ri-calendar-event-fill icon"
-            data-test="icon-user-events-modal"
-            onClick={() => toggleModal(ModalType.EVENTS_MODAL)}
-          ></i>
+          <span className="icon-wrapper icon--primary-dark">
+            <i
+              className="ri-calendar-event-fill icon icon--primary-dark"
+              data-test="icon-user-events-modal"
+              onClick={() => toggleModal(ModalType.EVENTS_MODAL)}
+            ></i>
+          </span>
         )}
       </nav>
       {!user.token && <AuthModal {...authModalProps} />}
