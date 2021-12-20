@@ -16,11 +16,7 @@ const BaseModal: React.FC<Props> = ({ visible, closeModal, modalRef, children })
     <section className="outer-modal" data-test="outer-modal" onClick={onCloseHandler}>
       <div className="modal-wrapper">
         <div className="inner-modal-close">
-          <i
-            className="ri-close-circle-fill icon icon-wrapper--primary-light"
-            data-test="icon-close"
-            onClick={() => closeModal(modalRef)}
-          ></i>
+          <i className="ri-close-circle-fill icon " data-test="icon-close" onClick={() => closeModal(modalRef)}></i>
         </div>
         {children}
       </div>

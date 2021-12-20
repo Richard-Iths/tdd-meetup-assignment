@@ -23,3 +23,9 @@ export interface EventComment {
   name: string;
   user_id: string;
 }
+
+export interface Event_Rating {
+  user_id: string;
+  event_id: string;
+  rating: number;
+}

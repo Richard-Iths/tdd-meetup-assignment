@@ -3,26 +3,44 @@
   min-width: 100%;
   background-color: getColor('primaryLight');
   display: grid;
-  grid-template-areas: 'img header header' 'img info info';
-  grid-template-rows: min-content auto;
+  grid-template-areas: 'card-type header header' 'card-type info info' 'card-type footer footer';
+  grid-template-rows: min-content auto min-content;
+  grid-template-columns: 1rem auto auto;
   box-shadow: 2px 0 10px 0px rgba($color: getColor('primaryDark'), $alpha: 0.3);
   min-height: 25rem;
 
+  &--event-over {
+    opacity: 0.5;
+  }
+
   &__header {
     display: flex;
-    justify-content: space-between;
-    padding: 0 1.6rem 0 1.6rem;
+    padding: 0 1.6rem;
     color: getColor('accentDark');
     grid-area: header;
-    // border: 2px solid #000;
     align-items: center;
+    gap: 1rem;
   }
-  &__content {
+  &__type {
     display: flex;
-    grid-area: img;
+    grid-area: card-type;
+    background-color: lighten($color: getColor('primaryDark'), $amount: 10);
+    &--event-admin {
+      background-color: getColor('accentDark');
+    }
+    &--event-attendee {
+      background-color: getColor('accentLight');
+    }
   }
   &__info {
     padding: 1rem 3.2rem;
     grid-area: info;
+  }
+  &__footer {
+    grid-area: footer;
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 1.6rem;
+    gap: 1rem;
   }
 }

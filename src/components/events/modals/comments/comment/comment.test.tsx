@@ -10,6 +10,7 @@ describe('Comment.tsx', () => {
     created_at: new Date('2010-11-11'),
     updated_at: new Date(),
     name: 'Kalle Grillkorv',
+    user_id: 'abc',
   };
   describe('Smoke tests', () => {
     it('Should render Comment component', () => {

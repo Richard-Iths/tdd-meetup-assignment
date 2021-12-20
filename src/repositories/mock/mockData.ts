@@ -5,12 +5,12 @@ const events: Event[] = [
     id: '123',
     created_at: new Date(),
     daley_visitors: 100,
-    date: new Date(),
+    date: new Date('2010-09-01'),
     description: ` Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquam illum quod fugiat provident totam laboriosam
         ut vitae iure eius nobis optio nostrum vero, earum, aut rerum sint recusandae aspernatur in.`,
     due_date: new Date(),
     event_admin: 'SpongeBob',
-    image: 'https://via.placeholder.com/150/0000FF/808080 ?Text=Hello world',
+    image: 'https://via.placeholder.com/150/0000FF/808080?Text=Hello world',
     max_attendees: 50,
     min_attendees: 45,
     name: 'City trip',
@@ -22,12 +22,12 @@ const events: Event[] = [
     id: '456',
     created_at: new Date(),
     daley_visitors: 100,
-    date: new Date(),
+    date: new Date('2022-03-31'),
     description: ` Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquam illum quod fugiat provident totam laboriosam
         ut vitae iure eius nobis optio nostrum vero, earum, aut rerum sint recusandae aspernatur in.`,
     due_date: new Date(),
     event_admin: 'SpongeBob',
-    image: 'https://via.placeholder.com/150/0000FF/808080 ?Text=Hello world',
+    image: 'https://via.placeholder.com/150/0000FF/808080?Text=Hello world',
     max_attendees: 50,
     min_attendees: 45,
     name: 'Camping trip',
@@ -44,7 +44,7 @@ const events: Event[] = [
         ut vitae iure eius nobis optio nostrum vero, earum, aut rerum sint recusandae aspernatur in.`,
     due_date: new Date(),
     event_admin: 'AnnUser',
-    image: 'https://via.placeholder.com/150/0000FF/808080 ?Text=Hello world',
+    image: 'https://via.placeholder.com/150/0000FF/808080?Text=Hello world',
     max_attendees: 50,
     min_attendees: 45,
     name: ' Car trip',
@@ -90,10 +90,6 @@ const userEvents: Event[] = [
 ];
 
 const eventUser: Attendee[] = [
-  {
-    event_id: '789',
-    user_id: 'SpongeBob',
-  },
   {
     event_id: '456',
     user_id: 'SpongeBob',

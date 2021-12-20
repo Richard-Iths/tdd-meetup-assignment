@@ -38,6 +38,8 @@ export interface IUserRepository {
   registerUser(email: string, password: string): Promise<LoginResponse | void>;
   getUserEvents(token: string): Promise<UserEventsResponse | void>;
   deleteUserEvent(eventId: string, token: string): Promise<SuccessResponse | void>;
+  attendEvent(eventId: string, token: string): Promise<SuccessResponse | void>;
+  unAttendEvent(eventId: string, token: string): Promise<SuccessResponse | void>;
 }
 
 export interface IEventRepository {

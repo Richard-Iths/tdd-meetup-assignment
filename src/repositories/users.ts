@@ -10,6 +10,23 @@ import {
 } from './types';
 
 export default class UsersRepository extends BaseRepository<User> implements IUserRepository {
+  async unAttendEvent(eventId: string, token: string): Promise<void | SuccessResponse> {
+    try {
+      this.setAuthorizationToken(token);
+      const url: UsersEndpoint = '/users/events/:id';
+      const newUrl = url.replace(':id', eventId);
+      const { data } = await this.axiosInstance.delete<SuccessResponse>(newUrl);
+      return { ...data };
+    } catch (_) {}
+  }
+  async attendEvent(eventId: string, token: string): Promise<void | SuccessResponse> {
+    try {
+      this.setAuthorizationToken(token);
+      const url: UsersEndpoint = '/users/events';
+      const { data } = await this.axiosInstance.post<SuccessResponse>(url, { eventId });
+      return { ...data };
+    } catch (_) {}
+  }
   async getUserEvents(token: string): Promise<void | UserEventsResponse> {
     try {
       const url: UsersEndpoint = '/users/events';

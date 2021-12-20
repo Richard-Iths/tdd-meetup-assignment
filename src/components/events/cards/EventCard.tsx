@@ -48,12 +48,41 @@ const EventCard: React.FC<Props> = ({ event }) => {
     visible: commentsModal,
   };
 
+  const isAttendingEvent = () => user.attendingEvents.some((attendingEvent) => attendingEvent.id === event.id);
+
+  const attendEvent = async () => {
+    if (user.token) {
+      const userRepo = repoFactory('userRepository');
+      const response = await userRepo.attendEvent(event.id, user.token);
+      if (response) {
+        setUser({ ...user, attendingEvents: [...user.attendingEvents, { ...event }] });
+      }
+    }
+  };
+  const unAttendEvent = async () => {
+    if (user.token) {
+      const userRepo = repoFactory('userRepository');
+      const response = await userRepo.unAttendEvent(event.id, user.token);
+      if (response) {
+        const attendingEvents = user.attendingEvents.filter((attendingEvent) => attendingEvent.id !== event.id);
+        setUser({ ...user, attendingEvents: [...attendingEvents] });
+      }
+    }
+  };
+  const isEventOver = () => new Date().getTime() > event.date.getTime() && 'event-card--event-over';
+  const checkCardType = (): string => {
+    let className = '';
+    if (isEventAdmin) {
+      className = className.concat('event-card__type--event-admin');
+    } else {
+      className.concat('event-card__type--event-attendee');
+    }
+    return className;
+  };
+
   return (
-    <article className="event-card" data-test="card-event">
+    <article className={`event-card ${isEventOver()}`} data-test="card-event">
       <div className="event-card__header">
-        <h2 className="event-card__info__name" data-test="event-card-name">
-          {event.name}
-        </h2>
         <div className="event-card__cta">
           <i
             className="ri-chat-1-fill icon"
@@ -62,19 +91,28 @@ const EventCard: React.FC<Props> = ({ event }) => {
               toggleModal(ModalRef.COMMENTS_MODAL);
             }}
           ></i>
-          {user.token && isEventAdmin && <i className="ri-edit-fill icon" data-test="icon-edit"></i>}
-          {user.token && isEventAdmin && (
-            <i className="ri-edit-fill icon" data-test="icon-remove" onClick={removeEvent}></i>
+          {user.token && !isAttendingEvent() && (
+            <i className="ri-user-add-fill icon" data-test="icon-event-attend" onClick={attendEvent} />
+          )}
+          {user.token && isAttendingEvent() && (
+            <i className="ri-user-unfollow-fill icon" data-test="icon-event-un-attend" onClick={unAttendEvent} />
           )}
         </div>
       </div>
-      <div className="event-card__content">
-        <img src={event.image} alt={event.image} />
-      </div>
+      <div className={`event-card__type ${checkCardType()}`}></div>
       <div className="event-card__info">
+        <h2 className="event-card__info__name" data-test="event-card-name">
+          {event.name}
+        </h2>
         <p className="event-card__info__description" data-test="event-card-description">
           {event.description}
         </p>
+      </div>
+      <div className="event-card__footer">
+        {user.token && isEventAdmin && <i className="ri-edit-fill icon" data-test="icon-edit" />}
+        {user.token && isEventAdmin && (
+          <i className="ri-edit-fill icon" data-test="icon-remove" onClick={removeEvent} />
+        )}
       </div>
       <CommentsModal {...commentsModalState} />
     </article>

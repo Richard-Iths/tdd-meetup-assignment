@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react';
 import React from 'react';
-import { mount, shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import EventCard from './EventCard';
 import mockData from '../../../repositories/mock/mockData';
 import { Event } from '../../../models';
@@ -8,6 +8,15 @@ import { RecoilRoot } from 'recoil';
 import { UserState, userState } from '../../../recoil/atoms/user';
 import UsersRepository from '../../../repositories/users';
 import { act } from 'react-dom/test-utils';
+import EventsRepository from '../../../repositories/events';
+
+afterAll(() => {
+  jest.clearAllMocks();
+});
+let commentSpy: jest.SpyInstance;
+beforeAll(() => {
+  commentSpy = jest.spyOn(EventsRepository.prototype, 'getEventComments').mockResolvedValue({ data: [] });
+});
 
 describe('EventCard.tsx', () => {
   const event: Event = { ...mockData.events[0] };
@@ -88,6 +97,46 @@ describe('EventCard.tsx', () => {
         const contentSection = wrapper.find('[data-test="event-card-description"]');
         expect(contentSection.exists()).toBe(true);
         expect(contentSection.text()).toStrictEqual(event.description);
+      });
+    });
+    describe('Authorized user', () => {
+      it('should be able to attend event if not already attending', async () => {
+        const repoSpy = jest
+          .spyOn(UsersRepository.prototype, 'attendEvent')
+          .mockResolvedValue({ data: { message: 'success' } });
+        expect(repoSpy).toHaveBeenCalledTimes(0);
+        expect(commentSpy).toHaveBeenCalledTimes(0);
+        const wrapper = mount(
+          <RecoilRoot initializeState={(snap) => snap.set(userState, { ...authRecoilState })}>
+            <EventCard event={{ ...event }} />
+          </RecoilRoot>
+        );
+        const attendBtn = wrapper.find('[data-test="icon-event-attend"]');
+        expect(attendBtn.exists()).toBe(true);
+        await act(async () => {
+          attendBtn.simulate('click');
+        });
+        expect(repoSpy).toHaveBeenCalledTimes(1);
+        expect(commentSpy).toHaveBeenCalledTimes(1);
+      });
+      it('should be able to un attend an event if attending', async () => {
+        const repoSpy = jest
+          .spyOn(UsersRepository.prototype, 'unAttendEvent')
+          .mockResolvedValue({ data: { message: 'success' } });
+        expect(repoSpy).toHaveBeenCalledTimes(0);
+        const wrapper = mount(
+          <RecoilRoot
+            initializeState={(snap) => snap.set(userState, { ...authRecoilState, attendingEvents: [{ ...event }] })}
+          >
+            <EventCard event={{ ...event }} />
+          </RecoilRoot>
+        );
+        const unAttendBtn = wrapper.find('[data-test="icon-event-un-attend"]');
+        expect(unAttendBtn.exists()).toBe(true);
+        await act(async () => {
+          unAttendBtn.simulate('click');
+        });
+        expect(repoSpy).toHaveBeenCalledTimes(1);
       });
     });
     describe('Event Admin', () => {

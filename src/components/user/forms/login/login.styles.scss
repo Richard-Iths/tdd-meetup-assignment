@@ -5,6 +5,7 @@
   flex-direction: column;
   gap: 2rem;
   min-width: 100%;
+  z-index: 5000;
   &__cta {
     &__login-btn {
       padding: 1.6rem 3.2rem;

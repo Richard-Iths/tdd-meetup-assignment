@@ -1,8 +1,25 @@
-import { EventsResponse, IUserRepository, LoginResponse, SuccessResponse, UserEventsResponse } from '../types';
+import { IUserRepository, LoginResponse, SuccessResponse, UserEventsResponse } from '../types';
 import MockDb, { timeOutValue } from './mockDb';
 const mocked = MockDb.initMockDb();
 
 export default class UsersMockRepository implements IUserRepository {
+  attendEvent(eventId: string, token: string): Promise<void | SuccessResponse> {
+    return new Promise((resolve) => {
+      const userEvent = mocked.getEventUserTable();
+      userEvent.push({ event_id: eventId, user_id: token });
+      resolve({ data: { message: 'success' } });
+    });
+  }
+  unAttendEvent(eventId: string, token: string): Promise<void | SuccessResponse> {
+    return new Promise((resolve) => {
+      const userEvent = mocked.getEventUserTable();
+      const eventIndex = userEvent.findIndex((event) => event.event_id === eventId && event.user_id === token);
+      if (eventIndex) {
+        userEvent.splice(eventIndex, 1);
+      }
+      resolve({ data: { message: 'success' } });
+    });
+  }
   loginUser(email: string, password: string): Promise<void | LoginResponse> {
     return new Promise((resolve) => {
       const userTable = mocked.getUsersTable();
@@ -23,7 +40,7 @@ export default class UsersMockRepository implements IUserRepository {
       const userEventTable = mocked.getEventUserTable();
       const userEvents = userEventTable.filter((event) => event.user_id === token);
       const attendingEvents = eventsTable.filter((event) =>
-        userEvents.find((userEvent) => userEvent.event_id === event.id)
+        userEvents.find((userEvent) => userEvent.event_id === event.id && event.event_admin !== token)
       );
       const administratedEvents = eventsTable.filter((event) => event.event_admin === token);
       timeOutValue(() => {
