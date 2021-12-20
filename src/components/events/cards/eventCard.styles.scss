@@ -1,0 +1,28 @@
+@import '../../../assets/scss';
+.event-card {
+  min-width: 100%;
+  background-color: getColor('primaryLight');
+  display: grid;
+  grid-template-areas: 'img header header' 'img info info';
+  grid-template-rows: min-content auto;
+  box-shadow: 2px 0 10px 0px rgba($color: getColor('primaryDark'), $alpha: 0.3);
+  min-height: 25rem;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1.6rem 0 1.6rem;
+    color: getColor('accentDark');
+    grid-area: header;
+    // border: 2px solid #000;
+    align-items: center;
+  }
+  &__content {
+    display: flex;
+    grid-area: img;
+  }
+  &__info {
+    padding: 1rem 3.2rem;
+    grid-area: info;
+  }
+}

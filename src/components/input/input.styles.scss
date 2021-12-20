@@ -2,6 +2,7 @@
 .form-input {
   display: flex;
   flex-direction: column;
+  min-width: 25rem;
   &__label {
     font-family: 'Montserrat', sans-serif;
     font-size: 0.8em;
@@ -15,5 +16,6 @@
     border-left: 2px solid getColor('primaryDark');
     padding: 0.8rem;
     background-color: getColor('primaryLight');
+    min-width: 100%;
   }
 }

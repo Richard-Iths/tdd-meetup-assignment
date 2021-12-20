@@ -1,0 +1,10 @@
+@import '../../assets/scss/';
+
+.landing {
+  background-color: getColor('primaryLight');
+  &__events {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+}

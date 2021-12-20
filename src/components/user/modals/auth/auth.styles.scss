@@ -1,11 +1,15 @@
 @import '../../../../assets/scss/', '../../../../assets/scss/utils.scss', '../../../../assets/scss/animations.scss';
 .auth-modal {
-  max-width: 32rem;
-  min-width: 32rem;
-  padding: 0 1.6rem;
+  padding: 0 3.2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
   &__text {
     padding: 1.6rem;
     max-width: 50ch;
     text-align: center;
+    min-height: 15rem;
   }
 }

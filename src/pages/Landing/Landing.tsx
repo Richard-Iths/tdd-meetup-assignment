@@ -3,6 +3,7 @@ import { useRecoilState } from 'recoil';
 import EventCard from '../../components/events/cards/EventCard';
 import { eventState } from '../../recoil/atoms/events';
 import { repoFactory } from '../../repositories';
+import './landing.styles.scss';
 
 const LandingPage: React.FC = ({}) => {
   const [events, setEvents] = useRecoilState(eventState);
@@ -27,7 +28,7 @@ const LandingPage: React.FC = ({}) => {
           YOUR PLACE <br /> YOUR INTERESTS
         </h1>
       </article>
-      <div className="landing-events">
+      <div className="landing__events">
         {events.events.length > 0 && events.events.map((event) => <EventCard key={event.id} event={{ ...event }} />)}
       </div>
     </section>

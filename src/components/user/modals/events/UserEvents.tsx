@@ -4,6 +4,7 @@ import { userState } from '../../../../recoil/atoms/user';
 import { repoFactory } from '../../../../repositories';
 import BaseModal, { Props as IBaseModal } from '../../../modals/BaseModal';
 import EventList from './list/EventList';
+import './userEvents.styles.scss';
 
 export interface Props extends IBaseModal {}
 type UserStateEvent = 'attendingEvents' | 'administratedEvents';
@@ -35,9 +36,9 @@ const UserEventsModal: React.FC<Props> = ({ closeModal, modalRef, visible }) => 
           <EventList events={getEvents('attendingEvents')} />
         </section>
       </section>
-      <section className="user-events-modal__attending-events" data-test="user-event-administrated">
+      <section className="user-events-modal__administrated-events" data-test="user-event-administrated">
         <h3 className="user-modal__title">Administrated Events</h3>
-        <EventList events={getEvents('attendingEvents')} />
+        <EventList events={getEvents('administratedEvents')} />
       </section>
     </BaseModal>
   );
