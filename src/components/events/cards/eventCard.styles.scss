@@ -8,8 +8,20 @@
   grid-template-columns: 1rem auto auto;
   box-shadow: 2px 0 10px 0px rgba($color: getColor('primaryDark'), $alpha: 0.3);
   min-height: 25rem;
+  gap: 1.5rem;
   &--event-over {
     opacity: 0.5;
+  }
+
+  &__cta {
+    display: flex;
+    justify-content: space-around;
+    min-width: 100%;
+    i {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
   }
 
   &__header {
@@ -19,6 +31,7 @@
     grid-area: header;
     align-items: center;
     gap: 1rem;
+    display: flex;
   }
   &__type {
     display: flex;

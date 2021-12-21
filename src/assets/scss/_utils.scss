@@ -6,6 +6,10 @@
     transform: scale(1.2);
     transition: all 200ms ease;
   }
+  &__label {
+    font-size: 0.5em;
+    font-weight: bold;
+  }
 }
 .icon-wrapper {
   display: block;

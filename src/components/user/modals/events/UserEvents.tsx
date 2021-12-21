@@ -35,7 +35,12 @@ const UserEventsModal: React.FC<Props> = ({ closeModal, modalRef, visible }) => 
     };
     getEvents();
   }, []);
-  const getEvents = () => new Set([...user.administratedEvents, ...user.attendingEvents]);
+  const getEvents = () => [
+    ...user.administratedEvents,
+    ...user.attendingEvents.filter(
+      (event) => !user.administratedEvents.some((adminEvent) => adminEvent.id === event.id)
+    ),
+  ];
 
   const [addEvent, setAddEvent] = useState<boolean>(false);
 

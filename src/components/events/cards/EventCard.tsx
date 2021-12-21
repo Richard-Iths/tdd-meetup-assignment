@@ -19,7 +19,7 @@ const EventCard: React.FC<Props> = ({ event }) => {
   useEffect(() => {
     const checkEventAdmin = () => user.administratedEvents.some((adminEvent) => adminEvent.id === event.id);
     setIsEventAdmin(checkEventAdmin());
-  }, []);
+  }, [user]);
 
   const removeEvent = async () => {
     if (user.token) {
@@ -51,7 +51,9 @@ const EventCard: React.FC<Props> = ({ event }) => {
     visible: commentsModal,
   };
 
-  const isAttendingEvent = () => user.attendingEvents.some((attendingEvent) => attendingEvent.id === event.id);
+  const isAttendingEvent = () => {
+    return user.attendingEvents.some((attendingEvent) => attendingEvent.id === event.id);
+  };
 
   const attendEvent = async () => {
     if (user.token) {
@@ -93,12 +95,18 @@ const EventCard: React.FC<Props> = ({ event }) => {
             onClick={() => {
               toggleModal(ModalRef.COMMENTS_MODAL);
             }}
-          ></i>
+          >
+            <span className="icon__label">Comment</span>
+          </i>
           {user.token && !isAttendingEvent() && (
-            <i className="ri-user-add-fill icon" data-test="icon-event-attend" onClick={attendEvent} />
+            <i className="ri-user-add-fill icon" data-test="icon-event-attend" onClick={attendEvent}>
+              <span className="icon__label">Attend</span>
+            </i>
           )}
           {user.token && isAttendingEvent() && (
-            <i className="ri-user-unfollow-fill icon" data-test="icon-event-un-attend" onClick={unAttendEvent} />
+            <i className="ri-user-unfollow-fill icon" data-test="icon-event-un-attend" onClick={unAttendEvent}>
+              <span className="icon__label">Un Attend</span>
+            </i>
           )}
         </div>
       </div>

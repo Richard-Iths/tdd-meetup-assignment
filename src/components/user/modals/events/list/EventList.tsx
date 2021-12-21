@@ -4,7 +4,7 @@ import EventCard from '../../../../events/cards/EventCard';
 import './eventList.styles.scss';
 
 export interface Props {
-  events: Set<Event>;
+  events: Event[];
 }
 const EventList: React.FC<Props> = ({ events }) => {
   return (

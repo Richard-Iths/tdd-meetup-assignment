@@ -7,6 +7,7 @@ export default class UsersMockRepository implements IUserRepository {
     return new Promise((resolve) => {
       const userEvent = mocked.getEventUserTable();
       const existingEvent = userEvent.find((event) => event.event_id === eventId && event.user_id === token);
+      console.log(existingEvent, 'existing event');
       if (!existingEvent) {
         userEvent.push({ event_id: eventId, user_id: token });
         resolve({ data: { message: 'success' } });
@@ -17,7 +18,7 @@ export default class UsersMockRepository implements IUserRepository {
     return new Promise((resolve) => {
       const userEvent = mocked.getEventUserTable();
       const eventIndex = userEvent.findIndex((event) => event.event_id === eventId && event.user_id === token);
-      if (eventIndex) {
+      if (eventIndex >= 0) {
         userEvent.splice(eventIndex, 1);
       }
       resolve({ data: { message: 'success' } });
@@ -43,7 +44,7 @@ export default class UsersMockRepository implements IUserRepository {
       const userEventTable = mocked.getEventUserTable();
       const userEvents = userEventTable.filter((event) => event.user_id === token);
       const attendingEvents = eventsTable.filter((event) =>
-        userEvents.find((userEvent) => userEvent.event_id === event.id && event.event_admin !== token)
+        userEvents.find((userEvent) => userEvent.event_id === event.id)
       );
       const administratedEvents = eventsTable.filter((event) => event.event_admin === token);
       timeOutValue(() => {
@@ -55,7 +56,7 @@ export default class UsersMockRepository implements IUserRepository {
     return new Promise((resolve) => {
       const eventsTable = mocked.getEventsTable();
       const eventIndex = eventsTable.findIndex((event) => event.id === eventId && token === event.event_admin);
-      if (eventIndex) {
+      if (eventIndex >= 0) {
         console.log('splicing index', eventIndex);
         eventsTable.splice(eventIndex, 1);
         timeOutValue(() => {
