@@ -38,7 +38,7 @@ describe('UserEvents.tsx', () => {
     });
     it('Should render EventList component', () => {
       const wrapper = mount(
-        <RecoilRoot>
+        <RecoilRoot initializeState={(snap) => snap.set(userState, { ...userRecoilState })}>
           <UserEvents {...props} />
         </RecoilRoot>
       );
@@ -49,25 +49,28 @@ describe('UserEvents.tsx', () => {
   });
 
   describe('Black box tests', () => {
-    it('should have an attending events section', () => {
+    it('should display events for the current user', () => {
       const wrapper = mount(
         <RecoilRoot>
           <UserEvents {...props} />
         </RecoilRoot>
       );
-      const attendingSection = wrapper.find('[data-test="user-event-attending"]');
+      const attendingSection = wrapper.find('[data-test="user-events"]');
       expect(attendingSection.exists()).toBe(true);
-      expect(attendingSection.children.length).toBe(1);
     });
-    it('should have an administrated events section', () => {
+    it('should be able to add new event', () => {
       const wrapper = mount(
         <RecoilRoot>
           <UserEvents {...props} />
         </RecoilRoot>
       );
-      const attendingSection = wrapper.find('[data-test="user-event-administrated"]');
-      expect(attendingSection.exists()).toBe(true);
-      expect(attendingSection.children.length).toBe(1);
+      let eventForm = wrapper.find(EventForm);
+      expect(eventForm.exists()).toBe(false);
+      const addEventBtn = wrapper.find('[data-test="icon-add-event"]');
+      expect(addEventBtn.exists()).toBe(true);
+      addEventBtn.simulate('click');
+      eventForm = wrapper.find(EventForm);
+      expect(eventForm.exists()).toBe(true);
     });
   });
 

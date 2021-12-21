@@ -4,12 +4,13 @@ import EventCard from '../../../../events/cards/EventCard';
 import './eventList.styles.scss';
 
 export interface Props {
-  events: Event[] | undefined;
+  events: Set<Event>;
 }
 const EventList: React.FC<Props> = ({ events }) => {
   return (
     <section className="event-list">
-      {events && events.map((event) => <EventCard event={{ ...event }} key={event.id} />)}
+      {events.values()}
+      {events && Array.from(events).map((event, index) => <EventCard event={{ ...event }} key={index} />)}
     </section>
   );
 };

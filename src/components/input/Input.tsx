@@ -6,8 +6,10 @@ export interface Props {
   label?: string;
   placeholder?: string;
   onChangeHandler: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  step?: number;
+  value?: string | number;
 }
-const Input: React.FC<Props> = ({ inputName, label, inputType, placeholder, onChangeHandler }) => {
+const Input: React.FC<Props> = ({ inputName, label, inputType, placeholder, onChangeHandler, step, value }) => {
   return (
     <div className="form-input">
       {label && (
@@ -22,6 +24,8 @@ const Input: React.FC<Props> = ({ inputName, label, inputType, placeholder, onCh
         placeholder={placeholder}
         onChange={onChangeHandler}
         data-test={`input-${inputName}`}
+        step={step}
+        value={value}
       />
     </div>
   );

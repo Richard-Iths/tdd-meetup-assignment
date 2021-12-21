@@ -1,11 +1,21 @@
 import { Event } from '../models';
 import BaseRepository from './base';
-import { EventCommentsResponse, EventsEndpoint, EventsResponse, IEventRepository, SuccessResponse } from './types';
+import {
+  EventCommentsResponse,
+  EventDto,
+  EventResponse,
+  EventsEndpoint,
+  EventsResponse,
+  IEventRepository,
+  SuccessResponse,
+} from './types';
 
 export default class EventsRepository extends BaseRepository<Event> implements IEventRepository {
-  async createEvent(event: Event): Promise<SuccessResponse | void> {
+  async createEvent(token: string, event: EventDto): Promise<EventResponse | void> {
     try {
-      const { data } = await this.create<EventsEndpoint>('/events', event);
+      const url: EventsEndpoint = '/events';
+      this.setAuthorizationToken(token);
+      const { data } = await this.axiosInstance.post<EventResponse>(url, { ...event });
       return { ...data };
     } catch (_) {}
   }

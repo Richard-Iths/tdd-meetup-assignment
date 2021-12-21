@@ -43,5 +43,15 @@ describe('Input.tsx', () => {
       const label = wrapper.find('[data-test="label-username"]');
       expect(label.exists()).toBe(true);
     });
+    it('should have an optional prop for number step', () => {
+      const wrapper = shallow(<Input {...props} inputType={'number'} step={2} />);
+      const userNameInput = wrapper.find('[data-test="input-username"]');
+      expect(userNameInput.prop('step')).toBe(2);
+    });
+    it('should have an optional prop for default value', () => {
+      const wrapper = shallow(<Input {...props} inputType={'number'} step={2} value="hello" />);
+      const userNameInput = wrapper.find('[data-test="input-username"]');
+      expect(userNameInput.prop('value')).toBe('hello');
+    });
   });
 });

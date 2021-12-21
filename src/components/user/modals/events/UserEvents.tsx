@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useRecoilState } from 'recoil';
+import { Event } from '../../../../models';
 import { userState } from '../../../../recoil/atoms/user';
 import { repoFactory } from '../../../../repositories';
 import BaseModal, { Props as IBaseModal } from '../../../modals/BaseModal';
@@ -10,6 +11,14 @@ export interface Props extends IBaseModal {}
 type UserStateEvent = 'attendingEvents' | 'administratedEvents';
 const UserEventsModal: React.FC<Props> = ({ closeModal, modalRef, visible }) => {
   const [user, setUser] = useRecoilState(userState);
+  useEffect(() => {
+    const body = document.querySelector('body')!;
+    if (visible) {
+      body.classList.add('no-scroll');
+    } else {
+      body.classList.remove('no-scroll');
+    }
+  }, [visible]);
   useEffect(() => {
     const getEvents = async () => {
       const userRepo = repoFactory('userRepository');
@@ -26,19 +35,19 @@ const UserEventsModal: React.FC<Props> = ({ closeModal, modalRef, visible }) => 
       }
     };
     getEvents();
-  }, []);
-  const getEvents = (eventType: UserStateEvent) => (user[eventType].length > 0 ? [...user[eventType]] : undefined);
+  }, [user, setUser]);
+
+  const getEvents = () => new Set([...user.administratedEvents, ...user.administratedEvents]);
   return (
     <BaseModal {...{ visible, closeModal, modalRef }}>
       <section className="user-events-modal" data-test="user-events-modal">
-        <section className="user-events-modal__attending-events" data-test="user-event-attending">
-          <h3 className="user-modal__title"> Attending Events</h3>
-          <EventList events={getEvents('attendingEvents')} />
+        <div className="user-events-modal__cta">
+          <i className="ri-add-box-fill icon"></i>
+        </div>
+        <section className="user-events-modal__attending-events" data-test="user-events">
+          <h3 className="user-modal__title">Events</h3>
+          {user.token && <EventList events={getEvents()} />}
         </section>
-      </section>
-      <section className="user-events-modal__administrated-events" data-test="user-event-administrated">
-        <h3 className="user-modal__title">Administrated Events</h3>
-        <EventList events={getEvents('administratedEvents')} />
       </section>
     </BaseModal>
   );

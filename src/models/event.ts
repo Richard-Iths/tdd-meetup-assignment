@@ -3,23 +3,23 @@ export interface Event {
   name: string;
   event_admin: string;
   description: string;
-  created_at: Date;
-  updated_at: Date;
+  created_at: string;
+  updated_at: string;
   max_attendees: number;
   min_attendees: number;
   daley_visitors: number;
   place: string;
   time: string;
-  date: Date;
-  due_date: Date;
+  date: string;
+  due_date: string;
   image: string;
 }
 
 export interface EventComment {
   event_id: string;
   comment: string;
-  created_at: Date;
-  updated_at: Date;
+  created_at: string;
+  updated_at: string;
   name: string;
   user_id: string;
 }

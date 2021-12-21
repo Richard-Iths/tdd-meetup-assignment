@@ -16,8 +16,14 @@ export interface GlobalSuccessResponse {
   message: SuccessMessage;
 }
 
-export type GlobalFailedResponse = { message: string; statusCode: number; type: 'error' };
+export interface EventDto extends Pick<Event, 'name' | 'time' | 'place' | 'description'> {
+  dueDate: string;
+  date: string;
+  minAttendees: number;
+  maxAttendees: number;
+}
 
+export type GlobalFailedResponse = { message: string; statusCode: number; type: 'error' };
 export type EventResponse = GlobalResponse<Event>;
 export type EventsResponse = GlobalResponse<Event[]>;
 export type UserResponse = GlobalResponse<User>;
@@ -43,7 +49,7 @@ export interface IUserRepository {
 }
 
 export interface IEventRepository {
-  createEvent(event: Event): Promise<SuccessResponse | void>;
+  createEvent(token: string, event: EventDto): Promise<EventResponse | void>;
   getEvents(): Promise<EventsResponse | void>;
   deleteEvent(id: string, token: string): Promise<SuccessResponse | void>;
   getEventComments(id: string): Promise<EventCommentsResponse | void>;

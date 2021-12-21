@@ -69,7 +69,7 @@ const EventCard: React.FC<Props> = ({ event }) => {
       }
     }
   };
-  const isEventOver = () => new Date().getTime() > event.date.getTime() && 'event-card--event-over';
+  const isEventOver = () => new Date().getTime() > new Date(event.date).getTime() && 'event-card--event-over';
   const checkCardType = (): string => {
     let className = '';
     if (isEventAdmin) {
