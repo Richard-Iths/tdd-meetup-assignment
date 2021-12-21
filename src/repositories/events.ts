@@ -11,6 +11,15 @@ import {
 } from './types';
 
 export default class EventsRepository extends BaseRepository<Event> implements IEventRepository {
+  async updateEvent(token: string, eventId: string, event: EventDto): Promise<void | EventResponse> {
+    try {
+      const url: EventsEndpoint = '/events/:id';
+      const modifiedUrl = url.replace(':id', eventId);
+      this.setAuthorizationToken(token);
+      const { data } = await this.axiosInstance.post<EventResponse>(modifiedUrl, { ...event });
+      return { ...data };
+    } catch (error) {}
+  }
   async createEvent(token: string, event: EventDto): Promise<EventResponse | void> {
     try {
       const url: EventsEndpoint = '/events';

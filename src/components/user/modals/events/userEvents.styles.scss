@@ -1,11 +1,14 @@
 @import '../../../../assets/scss/utils';
 .user-events-modal {
-  overflow-y: auto;
+  height: 100%;
+  &__cta {
+    padding: 0 3.2rem;
+    border-bottom: 2px dashed getColor('primaryDark');
+    margin-bottom: 1rem;
+  }
   &__attending-events {
-    // display: flex;
-    // flex-wrap: wrap;
-    // align-items: flex-start;
-    // justify-content: flex-start;
-    // border: 2px solid #000;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
   }
 }

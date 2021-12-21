@@ -19,7 +19,7 @@ beforeAll(() => {
 });
 
 describe('EventCard.tsx', () => {
-  const event: Event = { ...mockData.events[0] };
+  const event: Event = { ...mockData.events[0], date: new Date(Date.now() * 1000 * 60 * 60 * 128).toString() };
   const authRecoilState: UserState = {
     token: '123',
     attendingEvents: [],

@@ -6,8 +6,11 @@ export default class UsersMockRepository implements IUserRepository {
   attendEvent(eventId: string, token: string): Promise<void | SuccessResponse> {
     return new Promise((resolve) => {
       const userEvent = mocked.getEventUserTable();
-      userEvent.push({ event_id: eventId, user_id: token });
-      resolve({ data: { message: 'success' } });
+      const existingEvent = userEvent.find((event) => event.event_id === eventId && event.user_id === token);
+      if (!existingEvent) {
+        userEvent.push({ event_id: eventId, user_id: token });
+        resolve({ data: { message: 'success' } });
+      }
     });
   }
   unAttendEvent(eventId: string, token: string): Promise<void | SuccessResponse> {
@@ -53,6 +56,7 @@ export default class UsersMockRepository implements IUserRepository {
       const eventsTable = mocked.getEventsTable();
       const eventIndex = eventsTable.findIndex((event) => event.id === eventId && token === event.event_admin);
       if (eventIndex) {
+        console.log('splicing index', eventIndex);
         eventsTable.splice(eventIndex, 1);
         timeOutValue(() => {
           resolve({ data: { message: 'success' } });

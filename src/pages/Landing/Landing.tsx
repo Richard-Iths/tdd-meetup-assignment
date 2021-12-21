@@ -18,7 +18,7 @@ const LandingPage: React.FC = ({}) => {
     if (!events.events.length) {
       initEvents();
     }
-  });
+  }, [events]);
   return (
     <section className="landing">
       <article className="landing-hero">

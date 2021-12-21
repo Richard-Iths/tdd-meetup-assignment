@@ -12,6 +12,21 @@ import MockDb, { timeOutValue } from './mockDb';
 const mocked = MockDb.initMockDb();
 
 export default class EventsMockedRepository implements IEventRepository {
+  updateEvent(token: string, eventId: String, event: EventDto): Promise<void | EventResponse> {
+    return new Promise((resolve) => {
+      const eventsTable = mocked.getEventsTable();
+      const existingEvent = eventsTable.find((event) => event.id === eventId && event.event_admin === token);
+      if (existingEvent) {
+        const updatedEvent = { ...existingEvent, ...event };
+        const updateTable = eventsTable.filter((event) => event.id !== eventId);
+        updateTable.push({ ...updatedEvent });
+
+        timeOutValue(() => {
+          resolve({ data: { ...updatedEvent } });
+        });
+      }
+    });
+  }
   createEvent(token: string, event: EventDto): Promise<void | EventResponse> {
     return new Promise((resolve) => {
       const eventsTable = mocked.getEventsTable();

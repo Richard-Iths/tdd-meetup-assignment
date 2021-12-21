@@ -8,6 +8,7 @@ describe('BaseModal.tsx', () => {
     visible: true,
     closeModal: () => {},
     modalRef: 'myModal',
+    title: 'hello',
   };
   describe('Smoke tests', () => {
     it('Should render BaseModal component', () => {

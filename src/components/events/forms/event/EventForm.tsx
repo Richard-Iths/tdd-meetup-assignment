@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { Event } from '../../../../models';
+import { eventState, EventState } from '../../../../recoil/atoms/events';
 import { userState, UserState } from '../../../../recoil/atoms/user';
 import { repoFactory } from '../../../../repositories';
 import { EventDto } from '../../../../repositories/types';
@@ -9,7 +10,7 @@ import Input, { Props as IInput } from '../../../input/Input';
 interface Props {
   event?: Event;
 }
-
+type StateType = 'update' | 'add';
 const EventForm: React.FC<Props> = ({ event }) => {
   const [addEvent, setAddEvent] = useState<EventDto>({
     date: '',
@@ -22,6 +23,8 @@ const EventForm: React.FC<Props> = ({ event }) => {
     time: '',
   });
   const [user, setUser] = useRecoilState<UserState>(userState);
+  const [events, setEvents] = useRecoilState<EventState>(eventState);
+  const [state] = useState<StateType>(event ? 'update' : 'add');
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const target = e.target;
     setAddEvent({ ...addEvent, [target.name]: target.value });
@@ -98,19 +101,33 @@ const EventForm: React.FC<Props> = ({ event }) => {
   const addEventHandler = async () => {
     if (user.token) {
       const eventsRepo = repoFactory('eventRepository');
-      const response = await eventsRepo.createEvent(user.token, { ...addEvent });
-      if (response) {
-        setUser({ ...user, administratedEvents: [...user.administratedEvents, { ...response.data }] });
+
+      if (state === 'add') {
+        const response = await eventsRepo.createEvent(user.token, { ...addEvent });
+        if (response) {
+          setUser({ ...user, administratedEvents: [...user.administratedEvents, { ...response.data }] });
+          setEvents({ ...events, events: [...events.events, { ...response.data }] });
+        }
+      } else {
+        const response = await eventsRepo.updateEvent(user.token, event!.id, { ...addEvent });
+        if (response) {
+          const updateAdminEvents = user.administratedEvents.filter((event) => event.id !== response.data.id);
+          setUser({ ...user, administratedEvents: [...updateAdminEvents, { ...response.data }] });
+          const existingEvents = events.events.filter((currentEvent) => currentEvent.id !== event!.id);
+          setEvents({ ...events, events: [...existingEvents, { ...response.data }] });
+        }
       }
     }
   };
   return (
-    <article className="event-form">
+    <article className="event-form" data-test="event-form">
       {inputs.map((input, index) => (
         <Input {...input} key={index} />
       ))}
       <div className="event-form__cta">
-        <button className="event-form__cta__btn" data-test="btn-add-event" onClick={addEventHandler}></button>
+        <button className="event-form__cta__btn" data-test={`btn-${state}-event`} onClick={addEventHandler}>
+          {state === 'add' ? 'Add Event' : 'Update Event'}
+        </button>
       </div>
     </article>
   );

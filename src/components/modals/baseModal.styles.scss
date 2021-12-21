@@ -6,6 +6,7 @@
     top: 0;
     bottom: 0;
     background-color: rgba($color: getColor('primaryDark'), $alpha: 0.3);
+    overflow-y: auto;
   }
 
   .inner-modal-close {
@@ -14,7 +15,7 @@
     min-width: 100%;
     z-index: 1001;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     padding: 1.6rem 3.2rem;
   }
   .modal-wrapper {
@@ -22,5 +23,8 @@
     z-index: 1001;
     min-width: 100%;
     min-height: 100vh;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
   }
 }

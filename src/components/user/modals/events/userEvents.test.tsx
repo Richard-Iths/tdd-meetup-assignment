@@ -8,6 +8,7 @@ import { RecoilRoot } from 'recoil';
 import EventList from './list/EventList';
 import mockData from '../../../../repositories/mock/mockData';
 import { userState, UserState } from '../../../../recoil/atoms/user';
+import AddEvent from '../../../events/modals/Event/AddEvent';
 
 let repoSpy: jest.SpyInstance;
 
@@ -58,19 +59,20 @@ describe('UserEvents.tsx', () => {
       const attendingSection = wrapper.find('[data-test="user-events"]');
       expect(attendingSection.exists()).toBe(true);
     });
+
     it('should be able to add new event', () => {
       const wrapper = mount(
         <RecoilRoot>
           <UserEvents {...props} />
         </RecoilRoot>
       );
-      let eventForm = wrapper.find(EventForm);
-      expect(eventForm.exists()).toBe(false);
+      let eventModal = wrapper.find('[data-test="event-form"]');
+      expect(eventModal.exists()).toBe(false);
       const addEventBtn = wrapper.find('[data-test="icon-add-event"]');
       expect(addEventBtn.exists()).toBe(true);
       addEventBtn.simulate('click');
-      eventForm = wrapper.find(EventForm);
-      expect(eventForm.exists()).toBe(true);
+      eventModal = wrapper.find('[data-test="event-form"]');
+      expect(eventModal.exists()).toBe(true);
     });
   });
 

@@ -1,14 +1,13 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
-import { Event } from '../../../../models';
 import { userState } from '../../../../recoil/atoms/user';
 import { repoFactory } from '../../../../repositories';
+import AddEvent, { Props as IAddEvent } from '../../../events/modals/Event/AddEvent';
 import BaseModal, { Props as IBaseModal } from '../../../modals/BaseModal';
 import EventList from './list/EventList';
 import './userEvents.styles.scss';
 
 export interface Props extends IBaseModal {}
-type UserStateEvent = 'attendingEvents' | 'administratedEvents';
 const UserEventsModal: React.FC<Props> = ({ closeModal, modalRef, visible }) => {
   const [user, setUser] = useRecoilState(userState);
   useEffect(() => {
@@ -35,20 +34,30 @@ const UserEventsModal: React.FC<Props> = ({ closeModal, modalRef, visible }) => 
       }
     };
     getEvents();
-  }, [user, setUser]);
+  }, []);
+  const getEvents = () => new Set([...user.administratedEvents, ...user.attendingEvents]);
 
-  const getEvents = () => new Set([...user.administratedEvents, ...user.administratedEvents]);
+  const [addEvent, setAddEvent] = useState<boolean>(false);
+
+  const toggleAddEventHandler = () => setAddEvent(!addEvent);
+
+  const addEventState: IAddEvent = {
+    closeModal: toggleAddEventHandler,
+    modalRef: 'addEventModal',
+    visible: addEvent,
+  };
+
   return (
-    <BaseModal {...{ visible, closeModal, modalRef }}>
+    <BaseModal {...{ visible, closeModal, modalRef }} title="Events">
       <section className="user-events-modal" data-test="user-events-modal">
         <div className="user-events-modal__cta">
-          <i className="ri-add-box-fill icon"></i>
+          <i className="ri-add-box-fill icon" data-test="icon-add-event" onClick={toggleAddEventHandler}></i>
         </div>
         <section className="user-events-modal__attending-events" data-test="user-events">
-          <h3 className="user-modal__title">Events</h3>
           {user.token && <EventList events={getEvents()} />}
         </section>
       </section>
+      <AddEvent {...addEventState} />
     </BaseModal>
   );
 };

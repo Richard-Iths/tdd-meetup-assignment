@@ -53,4 +53,5 @@ export interface IEventRepository {
   getEvents(): Promise<EventsResponse | void>;
   deleteEvent(id: string, token: string): Promise<SuccessResponse | void>;
   getEventComments(id: string): Promise<EventCommentsResponse | void>;
+  updateEvent(token: string, eventId: String, event: EventDto): Promise<EventResponse | void>;
 }

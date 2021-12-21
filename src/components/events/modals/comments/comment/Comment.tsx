@@ -3,8 +3,8 @@ import { EventComment } from '../../../../../models';
 export interface Props extends EventComment {
   event_id: string;
   comment: string;
-  created_at: Date;
-  updated_at: Date;
+  created_at: string;
+  updated_at: string;
   name: string;
 }
 const Comment: React.FC<Props> = ({ comment, created_at, event_id, name, updated_at }) => {

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import { Event } from '../../../models';
 import { userState } from '../../../recoil/atoms/user';
+import { eventState, EventState } from '../../../recoil/atoms/events';
 import { repoFactory } from '../../../repositories';
 import CommentsModal, { Props as ModalProps } from '../modals/comments/Comments';
 import './eventCard.styles.scss';
@@ -13,6 +14,7 @@ enum ModalRef {
 }
 const EventCard: React.FC<Props> = ({ event }) => {
   const [user, setUser] = useRecoilState(userState);
+  const [events, setEvents] = useRecoilState<EventState>(eventState);
   const [isEventAdmin, setIsEventAdmin] = useState<boolean>(false);
   useEffect(() => {
     const checkEventAdmin = () => user.administratedEvents.some((adminEvent) => adminEvent.id === event.id);
@@ -25,8 +27,9 @@ const EventCard: React.FC<Props> = ({ event }) => {
       const response = await userRepository.deleteUserEvent(event.id, user.token);
       if (response && response.data.message === 'success') {
         const administratedEvents = user.administratedEvents.filter((adminEvent) => adminEvent.id !== event.id);
-
         setUser({ ...user, administratedEvents: [...administratedEvents] });
+        const newEvents = events.events.filter((currenEvent) => currenEvent.id !== event.id);
+        setEvents({ ...events, events: [...newEvents] });
       }
     }
   };
@@ -75,7 +78,7 @@ const EventCard: React.FC<Props> = ({ event }) => {
     if (isEventAdmin) {
       className = className.concat('event-card__type--event-admin');
     } else {
-      className.concat('event-card__type--event-attendee');
+      className = className.concat('event-card__type--event-attendee');
     }
     return className;
   };
@@ -110,8 +113,8 @@ const EventCard: React.FC<Props> = ({ event }) => {
       </div>
       <div className="event-card__footer">
         {user.token && isEventAdmin && <i className="ri-edit-fill icon" data-test="icon-edit" />}
-        {user.token && isEventAdmin && (
-          <i className="ri-edit-fill icon" data-test="icon-remove" onClick={removeEvent} />
+        {user.token && isEventAdmin && !isEventOver() && (
+          <i className="ri-delete-bin-fill icon" data-test="icon-remove" onClick={removeEvent} />
         )}
       </div>
       <CommentsModal {...commentsModalState} />

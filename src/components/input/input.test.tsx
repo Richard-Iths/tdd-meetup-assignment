@@ -51,7 +51,7 @@ describe('Input.tsx', () => {
     it('should have an optional prop for default value', () => {
       const wrapper = shallow(<Input {...props} inputType={'number'} step={2} value="hello" />);
       const userNameInput = wrapper.find('[data-test="input-username"]');
-      expect(userNameInput.prop('value')).toBe('hello');
+      expect(userNameInput.prop('defaultValue')).toBe('hello');
     });
   });
 });

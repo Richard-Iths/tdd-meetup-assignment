@@ -1,6 +1,6 @@
 import { atom } from 'recoil';
 import { Event } from '../../models';
-interface EventState {
+export interface EventState {
   events: Event[];
 }
 

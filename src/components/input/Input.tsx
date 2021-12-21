@@ -25,7 +25,7 @@ const Input: React.FC<Props> = ({ inputName, label, inputType, placeholder, onCh
         onChange={onChangeHandler}
         data-test={`input-${inputName}`}
         step={step}
-        value={value}
+        defaultValue={value ? value : ''}
       />
     </div>
   );

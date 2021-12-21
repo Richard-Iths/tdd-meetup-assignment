@@ -153,14 +153,53 @@ describe('EventForm.tsx', () => {
 
       const result = wrapper.find('input').reduce((acc, curr) => {
         const name: string = curr.prop('name')!;
-        const value = curr.prop('value');
+        const value = curr.prop('defaultValue');
         acc = { ...acc, [name]: value };
         return acc;
       }, {});
 
       expect(result).toEqual(expectedValues);
     });
+
+    it('should be able to update an event', async () => {
+      const repoSpy = jest
+        .spyOn(EventsRepository.prototype, 'updateEvent')
+        .mockResolvedValue({ data: { ...mockEvent } });
+      const wrapper = mount(
+        <RecoilRoot initializeState={(snap) => snap.set(userState, { ...recoilUserState })}>
+          <EventForm event={{ ...mockEvent }} />
+        </RecoilRoot>
+      );
+
+      expect(repoSpy).toHaveBeenCalledTimes(0);
+
+      const updateBtn = wrapper.find('[data-test="btn-update-event"]');
+
+      await act(async () => {
+        updateBtn.simulate('click');
+      });
+
+      expect(repoSpy).toHaveBeenCalledTimes(1);
+    });
   });
 
-  describe('White box tests', () => {});
+  describe('White box tests', () => {
+    it('should switch between adding and updating state if event prop is provided', () => {
+      let wrapper = mount(
+        <RecoilRoot>
+          <EventForm />
+        </RecoilRoot>
+      );
+      const addBtn = wrapper.find('[data-test="btn-add-event"]');
+      expect(addBtn.exists()).toBe(true);
+
+      wrapper = mount(
+        <RecoilRoot>
+          <EventForm event={{ ...mockEvent }} />
+        </RecoilRoot>
+      );
+      const updateBtn = wrapper.find('[data-test="btn-update-event"]');
+      expect(updateBtn.exists()).toBe(true);
+    });
+  });
 });
