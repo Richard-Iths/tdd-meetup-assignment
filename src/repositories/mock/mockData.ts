@@ -117,7 +117,7 @@ const users: User[] = [
 
 const eventComments: EventComment[] = [
   {
-    comment: 'good stuff',
+    comment: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam mollitia aut et, inventore praesentium reiciendis sapiente totam, odio distinctio, exercitationem ut quaerat ullam voluptatem error perspiciatis cupiditate delectus quo. Nemo.`,
     created_at: new Date().toString(),
     event_id: '789',
     updated_at: new Date().toString(),
@@ -125,11 +125,11 @@ const eventComments: EventComment[] = [
     user_id: '123',
   },
   {
-    comment: 'good stuff',
+    comment: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam mollitia aut et, inventore praesentium reiciendis sapiente totam, odio distinctio, exercitationem ut quaerat ullam voluptatem error perspiciatis cupiditate delectus quo. Nemo.`,
     created_at: new Date().toString(),
     event_id: '789',
     updated_at: new Date().toString(),
-    name: 'Lasse',
+    name: 'Peter',
     user_id: '123',
   },
 ];

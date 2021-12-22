@@ -1,0 +1,13 @@
+@import '../../../../../assets/scss/';
+.comment {
+  padding: 1.6rem 3.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  box-shadow: 2px 0 5px 2px rgba($color: getColor('primaryDark'), $alpha: 0.3);
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+  }
+}

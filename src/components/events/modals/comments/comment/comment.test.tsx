@@ -7,8 +7,8 @@ describe('Comment.tsx', () => {
   const props: Props = {
     event_id: '123',
     comment: 'helllo',
-    created_at: new Date('2010-11-11'),
-    updated_at: new Date(),
+    created_at: new Date('2010-11-11').toString(),
+    updated_at: new Date().toString(),
     name: 'Kalle Grillkorv',
     user_id: 'abc',
   };
@@ -27,7 +27,7 @@ describe('Comment.tsx', () => {
       const wrapper = mount(<Comment {...props} />);
       const createdAt = wrapper.find('[data-test="comment-created-at"]');
       expect(createdAt.exists()).toBe(true);
-      expect(createdAt.text().includes(props.created_at.toString())).toBe(true);
+      expect(createdAt.text().includes(props.created_at.toString().split('GMT')[0])).toBe(true);
     });
     it('should display name', () => {
       const wrapper = mount(<Comment {...props} />);

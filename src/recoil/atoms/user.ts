@@ -1,4 +1,4 @@
-import { atom } from 'recoil';
+import { atom, selector } from 'recoil';
 import { Event } from '../../models';
 export interface UserState {
   token: string | null;
@@ -11,5 +11,15 @@ export const userState = atom<UserState>({
     token: null,
     attendingEvents: [],
     administratedEvents: [],
+  },
+});
+
+export const getToken = selector({
+  key: 'getToken',
+  get: ({ get }) => {
+    const token = get(userState).token;
+    if (token) {
+      return token;
+    }
   },
 });

@@ -1,9 +1,8 @@
-@import '../../../../assets/scss/utils';
+@import '../../../../assets/scss/utils', '../../../../assets/scss/animations';
 .user-events-modal {
-  height: 100%;
+  min-height: 100vh;
   &__cta {
     padding: 0 3.2rem;
-    border-bottom: 2px dashed getColor('primaryDark');
     margin-bottom: 1rem;
   }
   &__attending-events {

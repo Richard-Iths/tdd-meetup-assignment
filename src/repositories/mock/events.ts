@@ -1,5 +1,7 @@
 import { Event } from '../../models';
 import {
+  CommentResponse,
+  EventCommentDto,
   EventCommentsResponse,
   EventDto,
   EventResponse,
@@ -12,6 +14,31 @@ import MockDb, { timeOutValue } from './mockDb';
 const mocked = MockDb.initMockDb();
 
 export default class EventsMockedRepository implements IEventRepository {
+  addEventComment(token: string, eventId: string, comment: EventCommentDto): Promise<void | CommentResponse> {
+    return new Promise((resolve) => {
+      const usersTable = mocked.getUsersTable();
+      const existingUser = usersTable.find((user) => user.username === token);
+      if (existingUser) {
+        const eventComments = mocked.getEventCommentTable();
+        const currentEvent = eventComments.find((event) => event.event_id === eventId);
+        if (currentEvent) {
+          const newComment = {
+            ...comment,
+            created_at: new Date().toString(),
+            updated_at: new Date().toString(),
+            event_id: eventId,
+            name: existingUser.username,
+            user_id: token,
+          };
+          eventComments.push({ ...newComment });
+
+          timeOutValue(() => {
+            resolve({ data: { ...newComment } });
+          });
+        }
+      }
+    });
+  }
   updateEvent(token: string, eventId: String, event: EventDto): Promise<void | EventResponse> {
     return new Promise((resolve) => {
       const eventsTable = mocked.getEventsTable();

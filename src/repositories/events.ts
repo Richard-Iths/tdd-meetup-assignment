@@ -1,6 +1,8 @@
 import { Event } from '../models';
 import BaseRepository from './base';
 import {
+  CommentResponse,
+  EventCommentDto,
   EventCommentsResponse,
   EventDto,
   EventResponse,
@@ -11,6 +13,15 @@ import {
 } from './types';
 
 export default class EventsRepository extends BaseRepository<Event> implements IEventRepository {
+  async addEventComment(token: string, eventId: string, comment: EventCommentDto): Promise<void | CommentResponse> {
+    try {
+      const url: EventsEndpoint = '/events/:id/comments';
+      const modifiedUrl = url.replace(':id', eventId);
+      this.setAuthorizationToken(token);
+      const { data } = await this.axiosInstance.post<CommentResponse>(modifiedUrl, comment);
+      return { ...data };
+    } catch (error) {}
+  }
   async updateEvent(token: string, eventId: string, event: EventDto): Promise<void | EventResponse> {
     try {
       const url: EventsEndpoint = '/events/:id';

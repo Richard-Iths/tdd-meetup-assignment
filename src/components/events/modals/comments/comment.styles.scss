@@ -1,0 +1,10 @@
+@import '../../../../assets/scss/';
+.comments-modal {
+  background-color: getColor('primaryLight');
+  min-height: 100vh;
+  min-width: 100vw;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  padding: 0 1.6rem;
+}

@@ -16,9 +16,70 @@
   }
 }
 
+@keyframes scale-in {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+@keyframes scale-out {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(0);
+  }
+}
+@keyframes slide-in-right {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+@keyframes slide-out-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+@keyframes slide-out-right {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
 .fade-in-animation {
   animation: fade-in 500ms ease;
 }
 .fade-out-animation {
   animation: fade-out 500ms ease;
+}
+.fade-out-animation-d-300 {
+  animation: fade-out 200ms 300ms ease;
+}
+
+.scale-in-animation {
+  animation: scale-in 500ms ease;
+}
+.scale-out-animation {
+  animation: scale-out 500ms ease;
+}
+.slide-in-right-animation {
+  animation: slide-in-right 500ms ease;
+}
+.slide-out-left-animation {
+  animation: slide-out-left 500ms ease;
+}
+.slide-out-right-animation {
+  animation: slide-out-right 500ms ease-out;
+  animation-delay: 500ms;
 }

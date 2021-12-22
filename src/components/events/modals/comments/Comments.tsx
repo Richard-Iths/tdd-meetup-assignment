@@ -4,10 +4,9 @@ import { EventComment } from '../../../../models';
 import { eventCommentsState } from '../../../../recoil/atoms/comments';
 import { userState } from '../../../../recoil/atoms/user';
 import { repoFactory } from '../../../../repositories';
-import EventsRepository from '../../../../repositories/events';
-import EventsMockedRepository from '../../../../repositories/mock/events';
 import BaseModal, { Props as IBaseModal } from '../../../modals/BaseModal';
 import Comment from './comment/Comment';
+import './comment.styles.scss';
 export interface Props extends IBaseModal {
   eventId: string;
 }
@@ -16,6 +15,15 @@ const CommentsModal: React.FC<Props> = ({ eventId, modalRef, visible, closeModal
   const [comments, setComments] = useRecoilState(eventCommentsState);
   const [user] = useRecoilState(userState);
   const [eventComments, setEventComments] = useState<EventComment[]>([]);
+
+  useEffect(() => {
+    const body = document.querySelector('body')!;
+    if (visible && !body.classList.contains('no-scroll')) {
+      body.classList.add('no-scroll');
+    } else {
+      body.classList.remove('no-scroll');
+    }
+  }, [visible]);
 
   useEffect(() => {
     const getEventComments = async () => {
@@ -40,7 +48,7 @@ const CommentsModal: React.FC<Props> = ({ eventId, modalRef, visible, closeModal
   }, []);
 
   return (
-    <BaseModal {...{ modalRef, visible, closeModal }}>
+    <BaseModal {...{ modalRef, visible, closeModal }} title="Comments">
       <section className="comments-modal" data-test="comments-modal">
         {user.token && (
           <div className="comments__cta">
