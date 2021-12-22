@@ -6,6 +6,7 @@ import { userState, UserState } from '../../../../recoil/atoms/user';
 import { repoFactory } from '../../../../repositories';
 import { EventDto } from '../../../../repositories/types';
 import Input, { Props as IInput } from '../../../input/Input';
+import './event.styles.scss';
 
 interface Props {
   event?: Event;
@@ -57,7 +58,7 @@ const EventForm: React.FC<Props> = ({ event }) => {
     },
     {
       inputName: 'time',
-      inputType: 'string',
+      inputType: 'text',
       onChangeHandler: onInputChange,
       label: 'Event Time',
       placeholder: 'Enter event time',
@@ -121,9 +122,11 @@ const EventForm: React.FC<Props> = ({ event }) => {
   };
   return (
     <article className="event-form" data-test="event-form">
-      {inputs.map((input, index) => (
-        <Input {...input} key={index} />
-      ))}
+      <div className="event-form__inputs">
+        {inputs.map((input, index) => (
+          <Input {...input} key={index} />
+        ))}
+      </div>
       <div className="event-form__cta">
         <button className="event-form__cta__btn" data-test={`btn-${state}-event`} onClick={addEventHandler}>
           {state === 'add' ? 'Add Event' : 'Update Event'}

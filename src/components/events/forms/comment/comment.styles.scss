@@ -1,0 +1,27 @@
+@import '../../../../assets/scss/', '../../../../assets/scss/utils';
+.comment-form {
+  margin-top: 1.6rem;
+  &__content {
+    display: flex;
+    flex-direction: column;
+    label {
+      font-weight: bold;
+    }
+  }
+  &__text-area {
+    min-height: 15rem;
+    outline: none;
+    border: none;
+    box-shadow: 2px 0 5px 2px rgba($color: getColor('primaryDark'), $alpha: 0.3);
+    padding: 1.6rem 3.2rem;
+  }
+  &__cta {
+    i {
+      display: flex;
+      align-items: center;
+      flex-direction: row-reverse;
+      gap: 0.8rem;
+      cursor: pointer;
+    }
+  }
+}

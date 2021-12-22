@@ -4,6 +4,7 @@ import { eventCommentsState, CommentsState } from '../../../../recoil/atoms/comm
 import { getToken } from '../../../../recoil/atoms/user';
 import { repoFactory } from '../../../../repositories';
 import { EventCommentDto } from '../../../../repositories/types';
+import './comment.styles.scss';
 
 export interface Props {
   eventId: string;
@@ -18,17 +19,16 @@ const CommentForm: React.FC<Props> = ({ eventId }) => {
     try {
       if (token) {
         const eventRepo = repoFactory('eventRepository');
-        const response = await eventRepo.addEventComment(token, '', comment);
+        const response = await eventRepo.addEventComment(token, eventId, comment);
         if (response) {
-          const eventComments = comments.eventComments.find((eventComment) => eventComment.eventId === eventId);
-          if (eventComments) {
-            eventComments.comments.push({ ...response.data });
-            setComments({ ...comments });
-          } else {
-            const newComments = [...comments.eventComments];
-            newComments.push({ eventId, comments: [{ ...response.data }] });
-            setComments({ ...comments, ...newComments });
-          }
+          const newEventsComments = comments.eventComments.map((eventComment) => {
+            if (eventComment.eventId === eventId) {
+              const newComments = [...eventComment.comments, { ...response.data }];
+              return { ...eventComment, comments: [...newComments] };
+            }
+            return eventComment;
+          });
+          setComments({ ...comments, eventComments: [...newEventsComments] });
         }
       }
     } catch (error) {
@@ -42,7 +42,7 @@ const CommentForm: React.FC<Props> = ({ eventId }) => {
   };
 
   return (
-    <article className="comment-form">
+    <article className="comment-form fade-in-animation" data-test="form-comment">
       <div className="comment-form__header"></div>
       <div className="comment-form__content">
         <label htmlFor="comment" data-test="label-comment-content">
@@ -53,12 +53,13 @@ const CommentForm: React.FC<Props> = ({ eventId }) => {
           className="comment-form__text-area"
           onChange={commentOnChangeHandler}
           data-test="text-area-comment"
+          id="comment-text-area"
         ></textarea>
       </div>
       <div className="comment-form__cta">
-        <button className="comment-form__cta__btn" onClick={addComment} data-test="btn-add-comment">
-          Add Comment
-        </button>
+        <i className="ri-add-box-fill icon" onClick={addComment} data-test="btn-add-comment">
+          <h4 className="icon__label">Add Comment</h4>
+        </i>
       </div>
     </article>
   );

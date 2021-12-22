@@ -27,7 +27,7 @@ const BaseModal: React.FC<Props> = ({ visible, closeModal, modalRef, children, t
         >
           {title && <h2>{title}</h2>}
           <i
-            className="ri-close-circle-fill icon "
+            className="ri-arrow-left-fill icon "
             data-test="icon-close"
             onClick={() => {
               setAnimate('out');

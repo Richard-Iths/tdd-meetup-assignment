@@ -9,7 +9,7 @@ import { act } from 'react-dom/test-utils';
 import { CommentsState, eventCommentsState } from '../../../../recoil/atoms/comments';
 import { userState, UserState } from '../../../../recoil/atoms/user';
 
-describe('Template.tsx', () => {
+describe('Comments.tsx', () => {
   const props: Props = {
     eventId: 'abc',
     closeModal: () => {},
@@ -84,6 +84,19 @@ describe('Template.tsx', () => {
         );
         const btnNewComment = wrapper.find('[data-test="btn-new-comment"]');
         expect(btnNewComment.exists()).toBe(true);
+      });
+      it('should render new comment form when clicked', () => {
+        const wrapper = mount(
+          <RecoilRoot initializeState={(snap) => snap.set(userState, { ...recoilUserState })}>
+            <CommentsModal {...props} />
+          </RecoilRoot>
+        );
+        let newCommentForm = wrapper.find('[data-test="form-comment"]');
+        expect(newCommentForm.exists()).toBe(false);
+        const btnNewComment = wrapper.find('[data-test="btn-new-comment"]');
+        btnNewComment.simulate('click');
+        newCommentForm = wrapper.find('[data-test="form-comment"]');
+        expect(newCommentForm.exists()).toBe(true);
       });
     });
   });

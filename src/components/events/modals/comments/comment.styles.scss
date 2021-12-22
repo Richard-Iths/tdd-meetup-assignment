@@ -7,4 +7,16 @@
   flex-direction: column;
   gap: 2rem;
   padding: 0 1.6rem;
+  margin-bottom: 2rem;
+
+  &__btn {
+    padding: 1rem 1.6rem;
+    background-color: getColor('accentLight');
+    border: none;
+    border-radius: 0.6rem;
+    min-width: 20rem;
+    font-weight: bold;
+  }
+  &__cta {
+  }
 }
