@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useRecoilState } from 'recoil';
+import { EventState, eventState } from '../../../recoil/atoms/events';
 import { userState } from '../../../recoil/atoms/user';
+import SearchBar, { Props as ISearchBar } from '../../events/searchBar/SearchBar';
 import AuthModal, { Props as IModalProps } from '../../user/modals/auth/Auth';
 import UserEvents from '../../user/modals/events/UserEvents';
 import './header.styles.scss';
@@ -10,8 +12,8 @@ enum ModalType {
   EVENTS_MODAL = 'eventModal',
 }
 
-const Header: React.FC = ({}) => {
-  const [user, setUser] = useRecoilState(userState);
+const Header: React.FC = () => {
+  const [user] = useRecoilState(userState);
   const [authModal, setAuthModal] = useState<boolean>(false);
   const [eventsModal, setEventsModal] = useState<boolean>(false);
 
@@ -38,9 +40,20 @@ const Header: React.FC = ({}) => {
     visible: eventsModal,
   };
 
+  const [events, setEvents] = useRecoilState<EventState>(eventState);
+
+  const searchState: ISearchBar = {
+    onChangeHandler: (e) => {
+      const target = e.target;
+      setEvents({ ...events, searchText: target.value });
+    },
+    placeholder: 'Search Event',
+  };
+
   return (
     <header className="app-header">
       <h2 data-test="header-logo">AM</h2>
+      <SearchBar {...searchState} />
       <nav className="app-header__nav">
         {!user.token && (
           <i

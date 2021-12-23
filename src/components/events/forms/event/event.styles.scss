@@ -1,8 +1,10 @@
+@import '../../../../assets/scss/';
 .event-form {
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
   justify-content: center;
+  gap: 2rem;
   &__inputs {
     display: flex;
     flex-wrap: wrap;
@@ -18,9 +20,18 @@
     }
   }
   &__cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     &__btn {
       padding: 1rem 1.6rem;
       display: block;
+      min-width: 25rem;
+      border: none;
+      background-color: getColor('primaryDark');
+      color: getColor('primaryLight');
+      font-weight: bold;
+      border-radius: 0.6rem;
     }
   }
 }

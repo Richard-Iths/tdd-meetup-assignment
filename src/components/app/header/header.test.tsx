@@ -82,4 +82,15 @@ describe('Header.tsx', () => {
       expect(logoEl.exists()).toBe(true);
     });
   });
+  describe('White box tests', () => {
+    it('should have a search-bar', () => {
+      const wrapper = mount(
+        <RecoilRoot>
+          <Header />
+        </RecoilRoot>
+      );
+      const searchBar = wrapper.find('[data-test="search-bar"]');
+      expect(searchBar.exists()).toBe(true);
+    });
+  });
 });

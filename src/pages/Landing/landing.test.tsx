@@ -38,7 +38,7 @@ describe('Landing.tsx', () => {
     });
     it('should render event cards for all events', () => {
       const wrapper = mount(
-        <RecoilRoot initializeState={(snap) => snap.set(eventState, { events: [...events] })}>
+        <RecoilRoot initializeState={(snap) => snap.set(eventState, { events: [...events], searchText: '' })}>
           <LandingPage />
         </RecoilRoot>
       );
