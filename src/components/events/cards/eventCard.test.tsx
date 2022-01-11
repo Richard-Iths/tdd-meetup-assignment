@@ -9,6 +9,8 @@ import { UserState, userState } from '../../../recoil/atoms/user';
 import UsersRepository from '../../../repositories/users';
 import { act } from 'react-dom/test-utils';
 import EventsRepository from '../../../repositories/events';
+import moment from 'moment';
+import { formatDate } from '../../../utils/dateTime';
 
 afterAll(() => {
   jest.clearAllMocks();
@@ -19,7 +21,9 @@ beforeAll(() => {
 });
 
 describe('EventCard.tsx', () => {
-  const event: Event = { ...mockData.events[0], date: new Date(Date.now() * 1000 * 60 * 60 * 128).toString() };
+  const date = moment().add(10, 'd').toISOString();
+  const dueDate = moment().add(5, 'd').toISOString();
+  const event: Event = { ...mockData.events[0], date, due_date: dueDate };
   const authRecoilState: UserState = {
     token: '123',
     attendingEvents: [],
@@ -84,9 +88,9 @@ describe('EventCard.tsx', () => {
             <EventCard event={{ ...event }} />
           </RecoilRoot>
         );
-        const contentSection = wrapper.find('[data-test="event-card-name"]');
-        expect(contentSection.exists()).toBe(true);
-        expect(contentSection.text()).toStrictEqual(event.name);
+        const cardName = wrapper.find('[data-test="event-card-name"]');
+        expect(cardName.exists()).toBe(true);
+        expect(cardName.text()).toStrictEqual(event.name);
       });
       it('should have event description content', () => {
         const wrapper = mount(
@@ -97,6 +101,46 @@ describe('EventCard.tsx', () => {
         const contentSection = wrapper.find('[data-test="event-card-description"]');
         expect(contentSection.exists()).toBe(true);
         expect(contentSection.text()).toStrictEqual(event.description);
+      });
+      it('should have due date for event', () => {
+        const wrapper = mount(
+          <RecoilRoot>
+            <EventCard event={{ ...event }} />
+          </RecoilRoot>
+        );
+        const eventDueDate = wrapper.find('[data-test="event-due-date"]');
+        expect(eventDueDate.exists()).toBe(true);
+        expect(eventDueDate.text().trim()).toStrictEqual(formatDate(event.due_date));
+      });
+      it('should have date for event', () => {
+        const wrapper = mount(
+          <RecoilRoot>
+            <EventCard event={{ ...event }} />
+          </RecoilRoot>
+        );
+        const eventDate = wrapper.find('[data-test="event-date"]');
+        expect(eventDate.exists()).toBe(true);
+        expect(eventDate.text().trim()).toStrictEqual(formatDate(event.date));
+      });
+      it('should have place for event', () => {
+        const wrapper = mount(
+          <RecoilRoot>
+            <EventCard event={{ ...event }} />
+          </RecoilRoot>
+        );
+        const eventPlace = wrapper.find('[data-test="event-place"]');
+        expect(eventPlace.exists()).toBe(true);
+        expect(eventPlace.text().trim()).toStrictEqual(event.place);
+      });
+      it('should have time for event', () => {
+        const wrapper = mount(
+          <RecoilRoot>
+            <EventCard event={{ ...event }} />
+          </RecoilRoot>
+        );
+        const eventPlace = wrapper.find('[data-test="event-time"]');
+        expect(eventPlace.exists()).toBe(true);
+        expect(eventPlace.text().trim()).toStrictEqual(event.time);
       });
     });
     describe('Authorized user', () => {

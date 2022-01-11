@@ -5,8 +5,9 @@ import { userState } from '../../../recoil/atoms/user';
 import { eventState, EventState } from '../../../recoil/atoms/events';
 import { repoFactory } from '../../../repositories';
 import CommentsModal, { Props as ModalProps } from '../modals/comments/Comments';
+import { formatDate } from '../../../utils/dateTime';
 import './eventCard.styles.scss';
-interface Props {
+export interface Props {
   event: Event;
 }
 enum ModalRef {
@@ -75,6 +76,7 @@ const EventCard: React.FC<Props> = ({ event }) => {
     }
   };
   const isEventOver = () => new Date().getTime() > new Date(event.date).getTime() && 'event-card--event-over';
+  const isDueDate = () => new Date().getTime() > new Date(event.due_date).getTime();
   const checkCardType = (): string => {
     let className = '';
     if (isEventAdmin) {
@@ -98,7 +100,7 @@ const EventCard: React.FC<Props> = ({ event }) => {
           >
             <span className="icon__label">Comment</span>
           </i>
-          {user.token && !isAttendingEvent() && (
+          {user.token && !isAttendingEvent() && !isDueDate() && (
             <i className="ri-user-add-fill icon" data-test="icon-event-attend" onClick={attendEvent}>
               <span className="icon__label">Attend</span>
             </i>
@@ -108,6 +110,38 @@ const EventCard: React.FC<Props> = ({ event }) => {
               <span className="icon__label">Un Attend</span>
             </i>
           )}
+        </div>
+      </div>
+      <div className="event-card__schedule">
+        <div className="event-card__schedule__info">
+          <h5 className="event-card__schedule__text">Date</h5>
+          <div className="event-card__schedule__dots"></div>
+          <h5 className="event-card__schedule__text" data-test="event-date">
+            {formatDate(event.date)}
+          </h5>
+        </div>
+        <div className={`event-card__schedule__info ${isDueDate() && 'event-card__schedule__due-date'}`}>
+          <h5 className="event-card__schedule__time">Sign up due date</h5>
+          <div className="event-card__schedule__dots"></div>
+          <h5 className="event-card__schedule__text" data-test="event-due-date">
+            {formatDate(event.due_date)}
+          </h5>
+        </div>
+        <div className="event-card__schedule__info">
+          <h5 className="event-card__schedule__text">Place</h5>
+          <div className="event-card__schedule__dots"></div>
+
+          <h5 className="event-card__schedule__text" data-test="event-place">
+            {event.place}
+          </h5>
+        </div>
+        <div className="event-card__schedule__info">
+          <h5 className="event-card__schedule__text">Time</h5>
+          <div className="event-card__schedule__dots"></div>
+
+          <h5 className="event-card__schedule__text" data-test="event-time">
+            {event.time}{' '}
+          </h5>
         </div>
       </div>
       <div className={`event-card__type ${checkCardType()}`}></div>

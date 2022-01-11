@@ -41,7 +41,7 @@ describe('Header.tsx', () => {
         authModalIcon.simulate('click');
         authModal = wrapper.find('[data-test="auth-modal"]');
 
-        wrapper.update();
+        // wrapper.update();
         expect(authModal.exists()).toBe(true);
       });
     });

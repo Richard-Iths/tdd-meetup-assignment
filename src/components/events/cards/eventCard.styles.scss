@@ -3,8 +3,8 @@
   min-width: 100%;
   background-color: getColor('primaryLight');
   display: grid;
-  grid-template-areas: 'card-type header header' 'card-type info info' 'card-type footer footer';
-  grid-template-rows: min-content auto min-content;
+  grid-template-areas: 'card-type header header' 'card-type event-schedule event-schedule' 'card-type info info' 'card-type footer footer';
+  grid-template-rows: min-content min-content auto min-content;
   grid-template-columns: 1rem auto auto;
   box-shadow: 2px 0 10px 0px rgba($color: getColor('primaryDark'), $alpha: 0.3);
   min-height: 25rem;
@@ -33,6 +33,27 @@
     gap: 1rem;
     display: flex;
   }
+
+  &__schedule {
+    grid-area: event-schedule;
+    padding: 0 3.2rem;
+    display: flex;
+    flex-direction: column;
+    &__due-date {
+      background-color: #f7b9b9;
+    }
+    &__info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    &__dots {
+      flex-grow: 1;
+      border-top: 2px dotted getColor('primaryDark');
+    }
+  }
+
   &__type {
     display: flex;
     grid-area: card-type;
@@ -54,5 +75,9 @@
     justify-content: flex-end;
     padding: 0 1.6rem;
     gap: 1rem;
+  }
+
+  &--event-over {
+    background-color: darken($color: getColor('primaryLight'), $amount: 5);
   }
 }

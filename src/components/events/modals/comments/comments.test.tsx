@@ -85,7 +85,7 @@ describe('Comments.tsx', () => {
         const btnNewComment = wrapper.find('[data-test="btn-new-comment"]');
         expect(btnNewComment.exists()).toBe(true);
       });
-      it('should render new comment form when clicked', () => {
+      it('should render new comment form when clicked', async () => {
         const wrapper = mount(
           <RecoilRoot initializeState={(snap) => snap.set(userState, { ...recoilUserState })}>
             <CommentsModal {...props} />
