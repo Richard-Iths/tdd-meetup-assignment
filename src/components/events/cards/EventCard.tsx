@@ -5,7 +5,7 @@ import { userState } from '../../../recoil/atoms/user';
 import { eventState, EventState } from '../../../recoil/atoms/events';
 import { repoFactory } from '../../../repositories';
 import CommentsModal, { Props as ModalProps } from '../modals/comments/Comments';
-import { formatDate } from '../../../utils/dateTime';
+import { formatDate, isPastDate } from '../../../utils/dateTime';
 import './eventCard.styles.scss';
 export interface Props {
   event: Event;
@@ -75,7 +75,7 @@ const EventCard: React.FC<Props> = ({ event }) => {
       }
     }
   };
-  const isEventOver = () => new Date().getTime() > new Date(event.date).getTime() && 'event-card--event-over';
+  const isEventOver = () => isPastDate(new Date().toISOString(), event.date) && 'event-card--event-over';
   const isDueDate = () => new Date().getTime() > new Date(event.due_date).getTime();
   const checkCardType = (): string => {
     let className = '';

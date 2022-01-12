@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
 import EventCard from '../../components/events/cards/EventCard';
 import { eventState, searchState } from '../../recoil/atoms/events';
 import { repoFactory } from '../../repositories';
+import { Filter, filterEvents } from '../../utils/filters';
 import './landing.styles.scss';
 
 const LandingPage: React.FC = () => {
@@ -20,6 +21,13 @@ const LandingPage: React.FC = () => {
       initEvents();
     }
   }, []);
+
+  const [filter, setFilter] = useState<Filter>(Filter.DATE_ASC);
+
+  const filteredEvents = () => {
+    return filterEvents([...search], filter);
+  };
+
   return (
     <section className="landing">
       <article className="landing-hero">
@@ -30,7 +38,7 @@ const LandingPage: React.FC = () => {
         </h1>
       </article>
       <div className="landing__events">
-        {search.length > 0 && search.map((event) => <EventCard key={event.id} event={{ ...event }} />)}
+        {search.length > 0 && filteredEvents().map((event) => <EventCard key={event.id} event={{ ...event }} />)}
       </div>
     </section>
   );
