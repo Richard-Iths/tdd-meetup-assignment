@@ -5,6 +5,7 @@
   flex-direction: column;
   justify-content: center;
   gap: 2rem;
+  margin-bottom: 5rem;
   &__inputs {
     display: flex;
     flex-wrap: wrap;
@@ -17,6 +18,24 @@
     input[type='number'] {
       max-width: 15rem;
       min-width: 15rem;
+    }
+    &__text-area {
+      display: flex;
+      flex-direction: column;
+      width: 80%;
+      margin-top: 2rem;
+      label {
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.8em;
+        padding: 0.8rem;
+      }
+      textarea {
+        border: none;
+        outline: none;
+        min-height: 25rem;
+        box-shadow: 0 2px 5px 1px rgba($color: getColor('primaryDark'), $alpha: 0.3);
+        padding: 1.6rem 3.2rem;
+      }
     }
   }
   &__cta {

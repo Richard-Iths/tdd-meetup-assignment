@@ -40,7 +40,7 @@ describe('EventForm.tsx', () => {
           <EventForm />
         </RecoilRoot>
       );
-      const eventDescriptionInput = wrapper.find('[data-test="input-description"]');
+      const eventDescriptionInput = wrapper.find('[data-test="textarea-description"]');
       expect(eventDescriptionInput.exists()).toBe(true);
       const eventDescriptionLabel = wrapper.find('[data-test="label-description"]');
       expect(eventDescriptionLabel.exists()).toBe(true);
@@ -151,12 +151,15 @@ describe('EventForm.tsx', () => {
       const eventForm = wrapper.find(EventForm);
       expect(eventForm.props()).toStrictEqual({ event: mockEvent });
 
-      const result = wrapper.find('input').reduce((acc, curr) => {
+      const inputs = wrapper.find('input').reduce((acc, curr) => {
         const name: string = curr.prop('name')!;
         const value = curr.prop('defaultValue');
         acc = { ...acc, [name]: value };
         return acc;
       }, {});
+
+      const textArea = wrapper.find('[data-test="textarea-description"]');
+      const result = { ...inputs, description: textArea.prop('defaultValue') };
 
       expect(result).toEqual(expectedValues);
     });

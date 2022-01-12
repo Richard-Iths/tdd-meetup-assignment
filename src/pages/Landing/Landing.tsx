@@ -24,10 +24,6 @@ const LandingPage: React.FC = () => {
 
   const [filter, setFilter] = useState<Filter>(Filter.DATE_ASC);
 
-  const filteredEvents = () => {
-    return filterEvents([...search], filter);
-  };
-
   return (
     <section className="landing">
       <article className="landing-hero">
@@ -38,7 +34,8 @@ const LandingPage: React.FC = () => {
         </h1>
       </article>
       <div className="landing__events">
-        {search.length > 0 && filteredEvents().map((event) => <EventCard key={event.id} event={{ ...event }} />)}
+        {search.length > 0 &&
+          filterEvents([...search], filter).map((event) => <EventCard key={event.id} event={{ ...event }} />)}
       </div>
     </section>
   );

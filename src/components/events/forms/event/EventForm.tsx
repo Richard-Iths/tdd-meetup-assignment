@@ -26,7 +26,7 @@ const EventForm: React.FC<Props> = ({ event }) => {
   const [user, setUser] = useRecoilState<UserState>(userState);
   const [events, setEvents] = useRecoilState<EventState>(eventState);
   const [state] = useState<StateType>(event ? 'update' : 'add');
-  const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const target = e.target;
     setAddEvent({ ...addEvent, [target.name]: target.value });
   };
@@ -39,14 +39,6 @@ const EventForm: React.FC<Props> = ({ event }) => {
       label: 'Event Name',
       placeholder: 'Enter event name',
       value: isInputValue('name') as string,
-    },
-    {
-      inputName: 'description',
-      inputType: 'text',
-      onChangeHandler: onInputChange,
-      label: 'Event Description',
-      placeholder: 'Enter event description',
-      value: isInputValue('description') as string,
     },
     {
       inputName: 'date',
@@ -126,6 +118,18 @@ const EventForm: React.FC<Props> = ({ event }) => {
         {inputs.map((input, index) => (
           <Input {...input} key={index} />
         ))}
+
+        <div className="event-form__inputs__text-area">
+          <label htmlFor="description" data-test="label-description">
+            Event Description
+          </label>
+          <textarea
+            name="description"
+            data-test="textarea-description"
+            onChange={onInputChange}
+            defaultValue={event?.description ? event.description : ''}
+          ></textarea>
+        </div>
       </div>
       <div className="event-form__cta">
         <button className="event-form__cta__btn" data-test={`btn-${state}-event`} onClick={addEventHandler}>
