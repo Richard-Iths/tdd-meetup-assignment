@@ -3,6 +3,7 @@
 ### All Users
 - As a user i want to be able to browse comments on events because i want to know what other people thinks
 - As a user i want to be able to search for events because i want to find an event fast 
+- As a user i want to be able to sort events after date because i want to see new events first
 
 ### Unauthorize User
 - As an unauthorized user i want to be able to login/register because i want to attend events and interact with the community
